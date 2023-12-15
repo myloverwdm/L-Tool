@@ -25,7 +25,6 @@ func main() {
 	// Create an instance of the app structure
 	// 创建一个App结构体实例
 	app := NewApp()
-
 	// Create application with options
 	// 使用选项创建应用
 	err := wails.Run(&options.App{
