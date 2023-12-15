@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Linux",
+    "commands": [
+      {
+        "command": "cp <源文件> <目标目录>",
+        "desc": "复制文件和目录",
+        "url": "https://www.runoob.com/linux/linux-comm-cp.html"
+      },
+      {
+        "command": "ls",
+        "desc": "列出当前目录下的文件和子目录",
+        "url": "https://www.runoob.com/linux/linux-comm-ls.html"
+      },
+      {
+        "command": "cd <绝对/相对路径>",
+        "desc": "切换目录",
+        "url": "https://www.runoob.com/linux/linux-comm-cd.html"
+      },
+      {
+        "command": "pwd",
+        "desc": "显示当前工作目录的路径",
+        "url": "https://www.runoob.com/linux/linux-comm-pwd.html"
+      },
+      {
+        "command": "mkdir",
+        "desc": "创建新目录",
+        "url": "https://www.runoob.com/linux/linux-comm-mkdir.html"
+      },
+      {
+        "command": "rm",
+        "desc": "删除文件或目录",
+        "url": "https://www.runoob.com/linux/linux-comm-rm.html"
+      },
+      {
+        "command": "rm -rf",
+        "desc": "强制删除文件或目录",
+        "url": "https://www.runoob.com/linux/linux-comm-rm.html"
+      },
+      {
+        "command": "mv",
+        "desc": "移动文件和目录，或者重命名文件和目录",
+        "url": "https://www.runoob.com/linux/linux-comm-mv.html"
+      },
+      {
+        "command": "cat",
+        "desc": "显示文件内容",
+        "url": "https://www.runoob.com/linux/linux-comm-cat.html"
+      },
+      {
+        "command": "grep",
+        "desc": "文本搜索工具",
+        "url": "https://www.runoob.com/linux/linux-comm-grep.html"
+      },
+      {
+        "command": "chmod",
+        "desc": "修改文件或目录的权限",
+        "url": "https://www.runoob.com/linux/linux-comm-chmod.html"
+      },
+      {
+        "command": "chown",
+        "desc": "修改文件或目录的所有者",
+        "url": "https://www.runoob.com/linux/linux-comm-chown.html"
+      },
+      {
+        "command": "ssh",
+        "desc": "远程登录到另一台计算机",
+        "url": "https://www.runoob.com/linux/linux-comm-ssh.html"
+      },
+      {
+        "command": "wget",
+        "desc": "下载文件",
+        "url": "https://www.runoob.com/linux/linux-comm-wget.html"
+      },
+      {
+        "command": "top",
+        "desc": "显示系统当前运行的进程和资源使用情况"
+      },
+      {
+        "command": "tar -zxvf <文件名>",
+        "desc": "打包和解压文件",
+        "url": "https://www.runoob.com/linux/linux-comm-tar.html"
+      }
+    ]
+  },
+  {
+    "name": "HDFS",
+    "commands": [
+      {
+        "command": "hdfs dfs -ls <目录路径>",
+        "desc": "查看hdfs目录下的文件"
+      },
+      {
+        "command": "hdfs dfs -du -h <目录路径>",
+        "desc": "查看hdfs目录下的文件大小"
+      },
+      {
+        "command": "hdfs dfs -get <HDFS文件路径> <本地路径>",
+        "desc": "将HDFS文件下载到本地"
+      },
+      {
+        "command": "hdfs dfs -put <本地路径> <HDFS文件夹路径>",
+        "desc": "将本地的文件上传到HDFS的文件夹下,需要先创建HDFS的文件夹"
+      },
+      {
+        "command": "hadoop fs -tail <HDFS文件路径>",
+        "desc": "显示文件的最后1kb的数据到标准输出。"
+      },
+      {
+        "command": "hdfs dfs -mkdir -p <HDFS文件路径>",
+        "desc": "创建目录  -p是创建多级目录",
+        "url": "https://www.php.cn/faq/502196.html"
+      },
+      {
+        "command": "hdfs dfs -rm <HDFS文件路径>",
+        "desc": "删除文件"
+      },
+      {
+        "command": "hdfs dfs -rm -r <HDFS文件夹路径>",
+        "desc": "删除文件夹,递归删除整个文件夹,包括文件夹下的所有文件,慎用"
+      }
+    ]
+  },
+  {
+    "name": "YARN",
+    "commands": [
+      {
+        "command": "yarn application -list",
+        "desc": "列出所有的Application"
+      },
+      {
+        "command": "yarn application -list -appStates <状态>",
+        "desc": "根据状态过滤Application 状态有（ALL、NEW、NEW_SAVING、SUBMITTED、ACCEPTED、RUNNING、FINISHED、FAILED、KILLED）"
+      },
+      {
+        "command": "yarn logs -applicationId <ApplicationId>",
+        "desc": "查看对应的application日志"
+      },
+      {
+        "command": "yarn logs -applicationId <ApplicationId> -containerId <ContainerId>",
+        "desc": "查看对应container日志"
+      },
+      {
+        "command": "yarn applicationattempt -list <ApplicationId>",
+        "desc": "列出所有Application尝试的列表"
+      },
+      {
+        "command": "yarn container -list <ApplicationAttemptId>",
+        "desc": "列出所有Container"
+      },
+      {
+        "command": "yarn rmadmin -refreshQueues",
+        "desc": "加载队列配置"
+      },
+      {
+        "command": "yarn queue -status <QueueName>",
+        "desc": "打印队列信息"
+      }
+    ]
+  },
+  {
+    "name": "SQL",
+    "commands": [
+      {
+        "command": "DELETE FROM 表名;",
+        "desc": "清空某个表的数据"
+      },
+      {
+        "command": "to_date('2023-12-12 14:42:50', 'yyyy/mm/dd hh24:mi:ss');",
+        "desc": "将字符串转换为日期"
+      },
+      {
+        "command": "to_timestamp('2023-12-12 14:42:50', 'YYYY-MM-DD HH24:MI:SS.FF');",
+        "desc": "将字符串转换为时间戳"
+      }
+    ]
+  }
+]

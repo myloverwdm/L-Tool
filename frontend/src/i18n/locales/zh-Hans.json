@@ -1,0 +1,84 @@
+{
+  "globals": {
+    "submit": "提交",
+    "cancel": "取消",
+    "confirm": "确认",
+    "close": "关闭",
+    "setting": "设置",
+    "add": "新增",
+    "search": "搜索",
+    "copy-success": "复制成功"
+  },
+  "index": {
+    "tool": "工具",
+    "util": "在线工具",
+    "language": "语言",
+    "setting": "设置"
+  },
+  "tool": {
+    "timestamp": "时间戳转化",
+    "timestamp-desc": "将时间戳和格式化字符互转",
+    "json": "字符串工具",
+    "json-parse": "JSON格式化",
+    "json-desc": "对json字符串进行处理",
+    "zk": "zookeeper工具",
+    "zk-desc": "zookeeper工具",
+    "add-success": "新增成功",
+    "delete-success": "删除成功",
+    "delete-fail": "删除失败",
+    "command": "命令合集",
+    "command-desc": "各种命令合集",
+    "kafka": "Kafka工具",
+    "kafka-desc": "Kafka工具"
+  },
+  "tool-timestamp": {
+    "timestamp": "时间戳",
+    "now": "现在",
+    "timestampP": "时间戳转换",
+    "ms": "毫秒(ms)",
+    "s": "秒(s)",
+    "transform": "转换",
+    "beijing": "北京时间",
+    "format": "点击格式化",
+    "quzhuanyi": "去转义",
+    "zhuan": "转义",
+    "time": "时间",
+    "delete-node": "删除节点",
+    "add-node": "新增子节点",
+    "delete-node-desc": "是否删除该节点?"
+  },
+  "tool-json": {
+    "error-json": "错误的JSON格式",
+    "cant-parse": "无法进行去转义",
+    "quzhuanyi": "去转义",
+    "json-parse": "JSON格式化",
+    "json-one": "JSON压缩一行",
+    "zhuan": "字符串转义",
+    "quzhuan": "字符串去转义",
+    "duibi": "字符串比对",
+    "pleaInput": "请输入需要进行对比的字符",
+    "isEmpty": "对比的字符串内容均为空",
+    "str-length": "字数："
+  },
+  "zk" : {
+    "p-node-name" : "请输入节点名称",
+    "p-node-delete" : "请选择节点后再执行删除操作",
+    "p-node-add" : "请选择节点后再执行新增操作",
+    "host": "ZK地址",
+    "node-name": "节点名称",
+    "node-value": "节点值",
+    "node-name2": "节点名称:",
+    "create-time": "创建时间:",
+    "modify-time": "修改时间:",
+    "data-length": "数据长度:",
+    "version": "版本:",
+    "child-count": "子节点数量:"
+  },
+  "command": {
+    "copy-success" : "命令复制成功",
+    "more" : "点击查看该命令更多信息",
+    "index": "序号",
+    "command": "命令",
+    "description": "描述"
+  }
+}

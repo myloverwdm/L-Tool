@@ -1,0 +1,84 @@
+{
+  "globals": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close",
+    "setting": "Settings",
+    "add": "Add",
+    "add-success": "Added successfully",
+    "delete-success": "Deleted successfully",
+    "delete-fail": "Deletion failed",
+    "search": "Search",
+    "copy-success": "Copied successfully"
+  },
+  "index": {
+    "tool": "Tool",
+    "util": "Online Tools",
+    "language": "Language",
+    "setting": "Settings"
+  },
+  "tool": {
+    "timestamp": "Timestamp Converter",
+    "timestamp-desc": "Convert between timestamps and formatted strings",
+    "json": "JSON Tools",
+    "json-parse": "JSON Formatting",
+    "json-desc": "Process JSON strings",
+    "zk": "ZooKeeper Tools",
+    "zk-desc": "ZooKeeper Tools",
+    "command": "Command Collection",
+    "command-desc": "Collection of various commands",
+    "kafka": "Kafka Tools",
+    "kafka-desc": "Kafka Tools"
+  },
+  "tool-timestamp": {
+    "timestamp": "Timestamp",
+    "now": "Now",
+    "timestampP": "Timestamp Conversion",
+    "ms": "ms",
+    "s": "s",
+    "transform": "Convert",
+    "beijing": "Beijing Time",
+    "format": "Click to format",
+    "quzhuanyi": "Remove Escaping",
+    "zhuan": "String Escaping",
+    "quzhuan": "Remove Escaping",
+    "delete-node": "Delete Node",
+    "add-node": "Add Child Node",
+    "delete-node-desc": "Are you sure you want to delete this node?"
+  },
+  "tool-json": {
+    "error-json": "Invalid JSON Format",
+    "cant-parse": "Unable to remove escaping",
+    "quzhuanyi": "Remove Escaping",
+    "json-parse": "JSON Formatting",
+    "json-one": "JSON Compact",
+    "zhuan": "String Escaping",
+    "quzhuan": "Remove String Escaping",
+    "duibi": "String Comparison",
+    "pleaInput": "Please enter the characters that need to be compared",
+    "isEmpty": "The contents of the compared strings are all empty",
+    "str-length": "String Length:"
+  },
+  "zk": {
+    "p-node-name": "Enter node name",
+    "p-node-delete": "Please select a node before performing the delete operation",
+    "p-node-add": "Please select a node before performing the add operation",
+    "host": "ZK Address",
+    "node-name": "Node Name",
+    "node-value": "Node Value",
+    "node-name2": "Node Name:",
+    "create-time": "Creation Time:",
+    "modify-time": "Modification Time:",
+    "data-length": "Data Length:",
+    "version": "Version:",
+    "child-count": "Child Node Count:"
+  },
+  "command": {
+    "copy-success": "Command copied successfully",
+    "more": "Click to view more information about this command",
+    "index": "Index",
+    "command": "Command",
+    "description": "Description"
+  }
+}
