@@ -30,10 +30,10 @@ func main() {
 	// 使用选项创建应用
 	err := wails.Run(&options.App{
 		Title:     "L-Tool",
-		Width:     900,
-		Height:    600,
-		MinWidth:  900,
-		MinHeight: 600,
+		Width:     1920,
+		Height:    1080,
+		MinWidth:  1024,
+		MinHeight: 768,
 		//MaxWidth:          1200,
 		//MaxHeight:         800,
 		DisableResize:     false,
