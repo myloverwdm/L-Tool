@@ -6,12 +6,24 @@ export function AddPath(arg1, arg2, arg3) {
   return window['go']['main']['App']['AddPath'](arg1, arg2, arg3);
 }
 
+export function BrowserOpenURL(arg1) {
+  return window['go']['main']['App']['BrowserOpenURL'](arg1);
+}
+
 export function DeleteZk(arg1) {
   return window['go']['main']['App']['DeleteZk'](arg1);
 }
 
 export function GetCommand() {
   return window['go']['main']['App']['GetCommand']();
+}
+
+export function GetCopyData() {
+  return window['go']['main']['App']['GetCopyData']();
+}
+
+export function GetCopyHis() {
+  return window['go']['main']['App']['GetCopyHis']();
 }
 
 export function GetItemList() {

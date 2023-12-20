@@ -35,10 +35,11 @@ func main() {
 		MinHeight: 768,
 		//MaxWidth:          1200,
 		//MaxHeight:         800,
-		DisableResize:     false,
-		Fullscreen:        false,
-		Frameless:         false,
-		StartHidden:       false,
+		DisableResize: false,
+		Fullscreen:    false,
+		Frameless:     false,
+		StartHidden:   false,
+		// 点击关闭按钮是否仅是隐藏程序
 		HideWindowOnClose: false,
 		BackgroundColour:  &options.RGBA{R: 255, G: 255, B: 255, A: 0},
 		Menu:              nil,
@@ -48,7 +49,8 @@ func main() {
 		OnDomReady:        app.domReady,
 		OnBeforeClose:     app.beforeClose,
 		OnShutdown:        app.shutdown,
-		WindowStartState:  options.Normal,
+		// 启动时窗口最大化
+		WindowStartState: options.Maximised,
 		AssetServer: &assetserver.Options{
 			Assets:     assets,
 			Handler:    nil,
@@ -74,7 +76,7 @@ func main() {
 			TitleBar: &mac.TitleBar{
 				TitlebarAppearsTransparent: true,
 				HideTitle:                  true,
-				HideTitleBar:               false,
+				HideTitleBar:               true,
 				FullSizeContent:            true,
 				UseToolbar:                 false,
 				HideToolbarSeparator:       false,

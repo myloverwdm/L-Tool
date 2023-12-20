@@ -12,8 +12,12 @@
   "index": {
     "tool": "工具",
     "util": "在线工具",
+    "copy-his": "剪切历史",
     "language": "语言",
-    "setting": "设置"
+    "setting": "设置",
+    "copy-data": "剪切数据",
+    "copy-time": "剪切时间",
+    "copy-header": "剪切板历史记录"
   },
   "tool": {
     "timestamp": "时间戳转化",

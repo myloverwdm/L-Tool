@@ -2,9 +2,10 @@
 import {useI18n} from "vue-i18n";
 import {onMounted, onUnmounted, ref} from "vue";
 import {SearchBar} from "search-bar-vue3";
-import {GetItemList, GetLanguageList, GetNowLanguage, SetNowLanguage} from "../wailsjs/go/main/App";
+import {GetItemList, GetLanguageList, GetNowLanguage, SetNowLanguage, GetCopyData, GetCopyHis} from "../wailsjs/go/main/App";
 import type {configuration} from "../wailsjs/go/models";
-import {Location, Setting} from "@element-plus/icons-vue";
+import {Location, Setting, DocumentCopy} from "@element-plus/icons-vue";
+import type {copy} from "../wailsjs/go/models";
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
@@ -24,11 +25,10 @@ const list = ref<configuration.Index[]>([]);
 onUnmounted(() => {
   document.removeEventListener("keydown", keyboardDownBack, true);
 });
-
+var timer: number | undefined;
 onMounted(() => {
   document.addEventListener("keydown", keyboardDownBack, true);
   GetNowLanguage().then((s) => {
-    console.log("得到的是: " + s);
     locale.value = s;
   });
   GetItemList().then((s) => {
@@ -37,11 +37,10 @@ onMounted(() => {
   GetLanguageList().then((s) => {
     listLanguages.value = s;
   });
-
-  // todo 删除上下按钮
-  // displayName("pre-match");
-  // displayName("next-match");
-
+  // 获取剪切板
+  timer = setInterval(() => {
+    GetCopyData();
+  }, 1000);
 });
 
 function displayName(name: string) {
@@ -76,13 +75,22 @@ const keyboardDownBack = (event: KeyboardEvent) => {
 //=========================================setting======================================
 let settingDrawer = ref(false);
 let showSearchBar = ref(true);
+let copyhis = ref(false);
+let copyData = ref(Array<copy.CopyHis>());
 const listLanguages = ref<configuration.Language[]>([]);
 
 const onclickLanguageHandle = (item: string) => {
   SetNowLanguage(item);
-  console.log("设置的语言是:" + item)
   locale.value = item;
 };
+
+function openCopyHis() {
+  GetCopyHis().then((s) => {
+    copyData.value = s.reverse();
+  });
+  copyhis.value = true;
+}
+
 </script>
 
 <template>
@@ -127,6 +135,22 @@ const onclickLanguageHandle = (item: string) => {
     </div>
   </el-drawer>
   <!--  setting end-->
+
+<!--  copy history start-->
+  <el-drawer v-model="copyhis">
+    <template #header>
+      <h4>{{ t("index.copy-header") }}</h4>
+    </template>
+    <div class="flex flex-wrap items-center">
+
+      <el-table :data="copyData" border style="width: 100%">
+        <el-table-column prop="data" :label="t('index.copy-data')" width="360" />
+        <el-table-column prop="time" :label="t('index.copy-time')"/>
+      </el-table>
+
+    </div>
+  </el-drawer>
+<!--  copy history end-->
   <div class="common-layout">
     <el-container>
       <el-aside width="200px">
@@ -176,6 +200,12 @@ const onclickLanguageHandle = (item: string) => {
 <!--                    <el-menu-item index="1-4-1">item one</el-menu-item>-->
 <!--                  </el-sub-menu>-->
 <!--                </el-sub-menu>-->
+                <el-menu-item index="3" @click="openCopyHis">
+                  <el-icon>
+                    <DocumentCopy/>
+                  </el-icon>
+                  <span>{{ t("index.copy-his") }}</span>
+                </el-menu-item>
                 <el-menu-item index="4" @click="settingDrawer = true">
                   <el-icon>
                     <setting/>

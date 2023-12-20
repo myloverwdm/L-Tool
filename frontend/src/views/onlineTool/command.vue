@@ -2,7 +2,7 @@
 import type {ElScrollbar} from "element-plus";
 import {ElMessage, ElNotification} from "element-plus";
 import {h, onMounted, ref} from 'vue'
-import {GetCommand} from "../../../wailsjs/go/main/App";
+import {GetCommand, BrowserOpenURL} from "../../../wailsjs/go/main/App";
 import type {index} from "../../../wailsjs/go/models";
 import {useI18n} from "vue-i18n";
 
@@ -25,7 +25,7 @@ onMounted(() => {
   GetCommand().then((value) => {
     console.log(value);
     commandData.value = value;
-  })
+  });
 })
 
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
@@ -54,7 +54,8 @@ function copyData(row: index.OneCommand) {
 }
 
 function openWebsite(url: string) {
-  window.open(url, "_blank");
+  // window.open(url, "_blank");
+  BrowserOpenURL(url);
 }
 
 function AAA(id: string) {
@@ -73,6 +74,8 @@ function AAA(id: string) {
   }
   scrollbarRef.value!.setScrollTop(height);
 }
+
+
 </script>
 
 <template>

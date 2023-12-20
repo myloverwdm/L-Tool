@@ -15,8 +15,12 @@
   "index": {
     "tool": "Tool",
     "util": "Online Tools",
+    "copy-his": "ClipBoard History",
     "language": "Language",
-    "setting": "Settings"
+    "setting": "Settings",
+    "copy-data": "Cut Data",
+    "copy-time": "Cut Time",
+    "copy-header": "Cutting Board History"
   },
   "tool": {
     "timestamp": "Timestamp Converter",

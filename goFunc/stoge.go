@@ -10,7 +10,7 @@ var (
 	GlobalMap map[string]string
 )
 
-const cacheFileName = "cacheLS.json"
+const cacheFileName = "data/cacheLS.json"
 
 type cache struct{}
 

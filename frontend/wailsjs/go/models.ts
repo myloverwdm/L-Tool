@@ -33,6 +33,25 @@ export namespace configuration {
 
 }
 
+export namespace copy {
+	
+	export class CopyHis {
+	    data: string;
+	    time: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new CopyHis(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.data = source["data"];
+	        this.time = source["time"];
+	    }
+	}
+
+}
+
 export namespace goFunc {
 	
 	export class LTResponse {

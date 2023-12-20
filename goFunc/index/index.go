@@ -17,6 +17,7 @@ func GetNowLanguage() string {
 	if language.Name != "" {
 		return language.Name
 	}
+	SetNowLanguage("zh-Hans")
 	return "zh-Hans"
 }
 

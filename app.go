@@ -4,8 +4,12 @@ import (
 	"LTool/configuration"
 	"LTool/goFunc"
 	"LTool/goFunc/index"
+	"LTool/goFunc/index/copy"
 	"LTool/page/onlineTools"
 	"context"
+	"github.com/atotto/clipboard"
+	"github.com/pkg/browser"
+	"time"
 )
 
 // App struct
@@ -108,4 +112,41 @@ func (a *App) GetNowLanguage() string {
 
 func (a *App) SetNowLanguage(language string) {
 	index.SetNowLanguage(language)
+}
+
+func (a *App) BrowserOpenURL(url string) {
+	err := browser.OpenURL(url)
+	if err != nil {
+		return
+	}
+}
+
+var lastCopyData = ""
+
+func (a *App) GetCopyData() {
+	content, err := clipboard.ReadAll()
+	if err != nil {
+		return
+	}
+	if content == "" {
+		return
+	}
+	if lastCopyData == content {
+		return
+	}
+	lastCopyData = content
+	copyHis := copy.GetCopyHis()
+	if len(copyHis) > 0 && copyHis[len(copyHis)-1].Data == content {
+		return
+	}
+	// 更新新的剪切板
+	copyHis = append(copyHis, copy.CopyHis{Data: content, Time: time.Now().Format("2006-01-02 15:04")})
+	if len(copyHis) > 100 {
+		copyHis = copyHis[len(copyHis)-100:]
+	}
+	copy.SetCopyHis(copyHis)
+}
+
+func (a *App) GetCopyHis() []copy.CopyHis {
+	return copy.GetCopyHis()
 }
