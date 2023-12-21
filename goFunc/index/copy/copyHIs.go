@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-const fileName = "data/copyHis.json"
+const fileName = "cache/copyHis.json"
 
 type CopyHis struct {
 	Data string `json:"data"`
