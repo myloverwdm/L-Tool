@@ -14,6 +14,10 @@ export function DeleteZk(arg1) {
   return window['go']['main']['App']['DeleteZk'](arg1);
 }
 
+export function GetCodeGroup() {
+  return window['go']['main']['App']['GetCodeGroup']();
+}
+
 export function GetCommand() {
   return window['go']['main']['App']['GetCommand']();
 }

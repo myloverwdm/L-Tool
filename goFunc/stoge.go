@@ -77,6 +77,7 @@ func Write(data string) {
 	// fmt.Println("写入缓存")
 	content := []byte(data)
 	// 写入文件
+	os.MkdirAll("cache", os.ModePerm)
 	err := ioutil.WriteFile(cacheFileName, content, 0644)
 	if err != nil {
 		// fmt.Println(err)

@@ -4,6 +4,7 @@ import (
 	"LTool/configuration"
 	"LTool/goFunc"
 	"LTool/goFunc/index"
+	"LTool/goFunc/index/code"
 	"LTool/goFunc/index/copy"
 	"LTool/page/onlineTools"
 	"context"
@@ -149,4 +150,8 @@ func (a *App) GetCopyData() {
 
 func (a *App) GetCopyHis() []copy.CopyHis {
 	return copy.GetCopyHis()
+}
+
+func (a *App) GetCodeGroup() []code.CodeGroup {
+	return code.GetCodeGroup()
 }

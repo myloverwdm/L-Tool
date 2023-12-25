@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import {useI18n} from "vue-i18n";
-import {onMounted, onUnmounted, ref} from "vue";
+import {h, onMounted, onUnmounted, ref} from "vue";
 import {SearchBar} from "search-bar-vue3";
-import {GetItemList, GetLanguageList, GetNowLanguage, SetNowLanguage, GetCopyData, GetCopyHis} from "../wailsjs/go/main/App";
-import type {configuration} from "../wailsjs/go/models";
-import {Location, Setting, DocumentCopy} from "@element-plus/icons-vue";
-import type {copy} from "../wailsjs/go/models";
+import {
+  GetCopyData,
+  GetCopyHis,
+  GetItemList,
+  GetLanguageList,
+  GetNowLanguage,
+  SetNowLanguage
+} from "../wailsjs/go/main/App";
+import type {configuration, copy} from "../wailsjs/go/models";
+import {DocumentCopy, Location, Setting, ScaleToOriginal} from "@element-plus/icons-vue";
+import {ElMessage, ElNotification} from "element-plus";
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
@@ -91,6 +98,20 @@ function openCopyHis() {
   copyhis.value = true;
 }
 
+function copyDataFun(row: copy.CopyHis) {
+  const el = document.createElement("textarea");
+  el.value = row.data;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
+  ElMessage({
+    message: t("command.copy-success"),
+    type: "success",
+  });
+}
+
+
 </script>
 
 <template>
@@ -136,21 +157,21 @@ function openCopyHis() {
   </el-drawer>
   <!--  setting end-->
 
-<!--  copy history start-->
+  <!--  copy history start-->
   <el-drawer v-model="copyhis">
     <template #header>
       <h4>{{ t("index.copy-header") }}</h4>
     </template>
     <div class="flex flex-wrap items-center">
 
-      <el-table :data="copyData" border style="width: 100%">
-        <el-table-column prop="data" :label="t('index.copy-data')" width="360" />
+      <el-table :data="copyData" border style="width: 100%" @row-click="copyDataFun">
+        <el-table-column prop="data" :label="t('index.copy-data')" width="350"/>
         <el-table-column prop="time" :label="t('index.copy-time')"/>
       </el-table>
 
     </div>
   </el-drawer>
-<!--  copy history end-->
+  <!--  copy history end-->
   <div class="common-layout">
     <el-container>
       <el-aside width="200px">
@@ -184,29 +205,37 @@ function openCopyHis() {
                     </router-link>
                   </div>
                 </el-sub-menu>
-<!--                <el-sub-menu index="1">-->
-<!--                  <template #title>-->
-<!--                    <el-icon>-->
-<!--                      <location/>-->
-<!--                    </el-icon>-->
-<!--                    <span>Navigator One</span>-->
-<!--                  </template>-->
+                <!--                <el-sub-menu index="1">-->
+                <!--                  <template #title>-->
+                <!--                    <el-icon>-->
+                <!--                      <location/>-->
+                <!--                    </el-icon>-->
+                <!--                    <span>Navigator One</span>-->
+                <!--                  </template>-->
 
-<!--                  <el-menu-item-group title="Group Two">-->
-<!--                    <el-menu-item index="1-3">item three</el-menu-item>-->
-<!--                  </el-menu-item-group>-->
-<!--                  <el-sub-menu index="1-4">-->
-<!--                    <template #title>item four</template>-->
-<!--                    <el-menu-item index="1-4-1">item one</el-menu-item>-->
-<!--                  </el-sub-menu>-->
-<!--                </el-sub-menu>-->
+                <!--                  <el-menu-item-group title="Group Two">-->
+                <!--                    <el-menu-item index="1-3">item three</el-menu-item>-->
+                <!--                  </el-menu-item-group>-->
+                <!--                  <el-sub-menu index="1-4">-->
+                <!--                    <template #title>item four</template>-->
+                <!--                    <el-menu-item index="1-4-1">item one</el-menu-item>-->
+                <!--                  </el-sub-menu>-->
+                <!--                </el-sub-menu>-->
                 <el-menu-item index="3" @click="openCopyHis">
                   <el-icon>
                     <DocumentCopy/>
                   </el-icon>
                   <span>{{ t("index.copy-his") }}</span>
                 </el-menu-item>
-                <el-menu-item index="4" @click="settingDrawer = true">
+
+                <router-link to="/onlineTool/code">
+                  <el-menu-item index="4">
+                    <el-icon><ScaleToOriginal /></el-icon>
+                    <span>{{ t("index.code") }}</span>
+                  </el-menu-item>
+                </router-link>
+
+                <el-menu-item index="5" @click="settingDrawer = true">
                   <el-icon>
                     <setting/>
                   </el-icon>
@@ -218,12 +247,12 @@ function openCopyHis() {
         </el-scrollbar>
       </el-aside>
       <el-main>
-<!--        <el-scrollbar max-height="100vh">-->
-          <!--          高亮-->
-          <div id="document">
-            <router-view></router-view>
-          </div>
-<!--        </el-scrollbar>-->
+        <!--        <el-scrollbar max-height="100vh">-->
+        <!--          高亮-->
+        <div id="document">
+          <router-view></router-view>
+        </div>
+        <!--        </el-scrollbar>-->
       </el-main>
     </el-container>
   </div>
@@ -250,4 +279,20 @@ button {
 .selected-highlight {
   background-color: #e3ba6e;
 }
+
+/*去除路由的下划线*/
+a {
+  text-decoration: none;
+}
+
+.router-link-active {
+  text-decoration: none;
+}
+
+
+.el-table .cell {
+  white-space: pre-line !important;
+}
+
+
 </style>

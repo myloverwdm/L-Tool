@@ -1,3 +1,54 @@
+export namespace code {
+	
+	export class Code {
+	    type: string;
+	    code: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Code(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.type = source["type"];
+	        this.code = source["code"];
+	    }
+	}
+	export class CodeGroup {
+	    name: string;
+	    codeList: Code[];
+	
+	    static createFrom(source: any = {}) {
+	        return new CodeGroup(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.name = source["name"];
+	        this.codeList = this.convertValues(source["codeList"], Code);
+	    }
+	
+		convertValues(a: any, classs: any, asMap: boolean = false): any {
+		    if (!a) {
+		        return a;
+		    }
+		    if (a.slice) {
+		        return (a as any[]).map(elem => this.convertValues(elem, classs));
+		    } else if ("object" === typeof a) {
+		        if (asMap) {
+		            for (const key of Object.keys(a)) {
+		                a[key] = new classs(a[key]);
+		            }
+		            return a;
+		        }
+		        return new classs(a);
+		    }
+		    return a;
+		}
+	}
+
+}
+
 export namespace configuration {
 	
 	export class Index {

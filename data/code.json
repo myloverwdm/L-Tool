@@ -1,0 +1,28 @@
+[
+  {
+    "name" : "时间戳格式化yyyy-MM-dd HH:mm:ss",
+    "codeList": [
+      {
+        "type" : "Java",
+        "code": "public String dateFormat() {\n    SimpleDateFormat dateFormat = new SimpleDateFormat(\"yyyy-MM-dd HH:mm:ss\");\n    return dateFormat.format(new Date());\n  }"
+      },
+      {
+        "type" : "JavaScript",
+        "code": "function dateFormat() {\n  var currentDate = new Date();\n  \n  var year = currentDate.getFullYear();\n  var month = formatTwoDigits(currentDate.getMonth() + 1);\n  var day = formatTwoDigits(currentDate.getDate());\n  var hours = formatTwoDigits(currentDate.getHours());\n  var minutes = formatTwoDigits(currentDate.getMinutes());\n  var seconds = formatTwoDigits(currentDate.getSeconds());\n  \n  var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;\n  \n  return formattedDate;\n}\n\nfunction formatTwoDigits(number) {\n  return number < 10 ? '0' + number : number;\n}"
+      }
+    ]
+  },
+  {
+    "name" : "将一个目录复制到另一个目录下",
+    "codeList": [
+      {
+        "type" : "Java",
+        "code": "import java.io.IOException;\nimport java.nio.file.*;\nimport java.nio.file.attribute.BasicFileAttributes;\n\npublic class DirectoryCopy {\n    public static void main(String[] args) {\n        String sourceDir = \"path/to/source\";       // 替换为要复制的源目录路径\n        String destinationDir = \"path/to/dest\";    // 替换为目标目录的路径\n        boolean overwrite = false;                 // 是否覆盖已存在的文件\n\n        try {\n            copyDirectory(sourceDir, destinationDir, overwrite);\n            System.out.println(\"目录复制成功！\");\n        } catch (IOException e) {\n            System.out.println(\"目录复制出错：\" + e.getMessage());\n        }\n    }\n\n    private static void copyDirectory(String sourceDir, String destinationDir, boolean overwrite) throws IOException {\n        Path sourcePath = Paths.get(sourceDir);\n        Path destinationPath = Paths.get(destinationDir);\n\n        Files.walkFileTree(sourcePath, new SimpleFileVisitor<Path>() {\n            @Override\n            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {\n                // 构建目标目录的路径\n                Path destinationDir = destinationPath.resolve(sourcePath.relativize(dir));\n\n                // 创建目标目录\n                Files.createDirectories(destinationDir);\n                return FileVisitResult.CONTINUE;\n            }\n\n            @Override\n            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {\n                // 构建目标文件的路径\n                Path destinationFile = destinationPath.resolve(sourcePath.relativize(file));\n\n                // 如果目标文件已存在且不允许覆盖，则跳过复制\n                if (Files.exists(destinationFile) && !overwrite) {\n                    return FileVisitResult.CONTINUE;\n                }\n\n                // 复制文件\n                Files.copy(file, destinationFile, StandardCopyOption.REPLACE_EXISTING);\n                return FileVisitResult.CONTINUE;\n            }\n        });\n    }\n}"
+      },
+      {
+        "type" : "GO",
+        "code": "/**\noverwrite 是否覆盖源文件\n */\nfunc CopyDir(sourceDir, destinationDir string, overwrite bool) error {\n\t// 创建目标目录\n\terr := os.MkdirAll(destinationDir, 0755)\n\tif err != nil {\n\t\treturn err\n\t}\n\t// 遍历源目录\n\terr = filepath.Walk(sourceDir, func(path string, info os.FileInfo, err error) error {\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\t// 构建目标文件或目录的路径\n\t\tdestPath := filepath.Join(destinationDir, path[len(sourceDir):])\n\t\tif info.IsDir() {\n\t\t\t// 创建目标目录\n\t\t\terr = os.MkdirAll(destPath, 0755)\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n\t\t} else {\n\t\t\t// 复制文件\n\t\t\terr = copyFile(path, destPath, overwrite)\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n\t\t}\n\n\t\treturn nil\n\t})\n\n\treturn err\n}\n\nfunc copyFile(sourcePath, destinationPath string, overwrite bool) error {\n\t// 检查目标文件是否已存在\n\tif _, err := os.Stat(destinationPath); err == nil {\n\t\tif !overwrite {\n\t\t\t// 目标文件已存在且不允许覆盖\n\t\t\treturn nil\n\t\t}\n\t}\n\tsourceFile, err := os.Open(sourcePath)\n\tif err != nil {\n\t\treturn err\n\t}\n\tdefer sourceFile.Close()\n\tdestinationFile, err := os.Create(destinationPath)\n\tif err != nil {\n\t\treturn err\n\t}\n\tdefer destinationFile.Close()\n\t_, err = io.Copy(destinationFile, sourceFile)\n\tif err != nil {\n\t\treturn err\n\t}\n\treturn nil\n}\n"
+      }
+    ]
+  }
+]

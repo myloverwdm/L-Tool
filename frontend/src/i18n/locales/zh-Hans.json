@@ -17,7 +17,8 @@
     "setting": "设置",
     "copy-data": "剪切数据",
     "copy-time": "剪切时间",
-    "copy-header": "剪切板历史记录"
+    "copy-header": "剪切板历史记录",
+    "code": "常用代码"
   },
   "tool": {
     "timestamp": "时间戳转化",

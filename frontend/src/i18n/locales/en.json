@@ -20,7 +20,8 @@
     "setting": "Settings",
     "copy-data": "Cut Data",
     "copy-time": "Cut Time",
-    "copy-header": "Cutting Board History"
+    "copy-header": "Cutting Board History",
+    "code": "Common Codes"
   },
   "tool": {
     "timestamp": "Timestamp Converter",

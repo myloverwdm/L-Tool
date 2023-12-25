@@ -19,6 +19,7 @@ func SetCopyHis(copyHis []CopyHis) {
 		return
 	}
 	// 写入文件
+	os.MkdirAll("cache", os.ModePerm)
 	err2 := ioutil.WriteFile(fileName, data, 0644)
 	if err2 != nil {
 		// fmt.Println(err)

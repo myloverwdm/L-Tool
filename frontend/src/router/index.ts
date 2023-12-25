@@ -40,6 +40,11 @@ const router = createRouter({
       path: "/onlineTool/kafka",
       name: "kafka",
       component: () => import("../views/onlineTool/kafka.vue"),
+    },
+    {
+      path: "/onlineTool/code",
+      name: "code",
+      component: () => import("../views/onlineTool/code.vue"),
     }
   ],
 });
