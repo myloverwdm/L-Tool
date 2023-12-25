@@ -14,7 +14,6 @@ func GetOnlineToolsList() []OnlineTool {
 	return []OnlineTool{
 		{"tool.json", "tool.json-desc", "/onlineTool/json"},
 		{"tool.command", "tool.command-desc", "/onlineTool/command"},
-		{"tool.timestamp", "tool.timestamp-desc", "/onlineTool/timestamp"},
 		{"tool.zk", "tool.zk-desc", "/onlineTool/zk"},
 		{"tool.kafka", "tool.kafka-desc", "/onlineTool/kafka"},
 	}

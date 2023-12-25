@@ -5,13 +5,12 @@ import {SearchBar} from "search-bar-vue3";
 import {
   GetCopyData,
   GetCopyHis,
-  GetItemList,
   GetLanguageList,
   GetNowLanguage,
   SetNowLanguage
 } from "../wailsjs/go/main/App";
 import type {configuration, copy} from "../wailsjs/go/models";
-import {DocumentCopy, Location, Setting, ScaleToOriginal} from "@element-plus/icons-vue";
+import {DocumentCopy, Tools, Setting, ScaleToOriginal, DocumentRemove} from "@element-plus/icons-vue";
 import {ElMessage, ElNotification} from "element-plus";
 
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -27,8 +26,6 @@ const {t, availableLocales: languages, locale} = useI18n();
 document.body.addEventListener("click", function (event) {
   event.preventDefault();
 });
-const list = ref<configuration.Index[]>([]);
-
 onUnmounted(() => {
   document.removeEventListener("keydown", keyboardDownBack, true);
 });
@@ -37,9 +34,6 @@ onMounted(() => {
   document.addEventListener("keydown", keyboardDownBack, true);
   GetNowLanguage().then((s) => {
     locale.value = s;
-  });
-  GetItemList().then((s) => {
-    list.value = s;
   });
   GetLanguageList().then((s) => {
     listLanguages.value = s;
@@ -185,41 +179,12 @@ function copyDataFun(row: copy.CopyHis) {
                   @close="handleClose"
                   :default-openeds="['0']"
               >
-                <el-sub-menu index="0">
-                  <template #title>
-                    <el-icon>
-                      <location/>
-                    </el-icon>
+                <router-link to="/">
+                  <el-menu-item index="1">
+                    <el-icon><Tools /></el-icon>
                     <span>{{ t("index.tool") }}</span>
-                  </template>
-
-                  <div
-                      class="header-list"
-                      v-for="(item, index) in list"
-                      :key="index"
-                  >
-                    <router-link :to="item.route" tag="span">
-                      <el-menu-item :index="'0-' + index"
-                      >{{ t(item.name) }}
-                      </el-menu-item>
-                    </router-link>
-                  </div>
-                </el-sub-menu>
-                <!--                <el-sub-menu index="1">-->
-                <!--                  <template #title>-->
-                <!--                    <el-icon>-->
-                <!--                      <location/>-->
-                <!--                    </el-icon>-->
-                <!--                    <span>Navigator One</span>-->
-                <!--                  </template>-->
-
-                <!--                  <el-menu-item-group title="Group Two">-->
-                <!--                    <el-menu-item index="1-3">item three</el-menu-item>-->
-                <!--                  </el-menu-item-group>-->
-                <!--                  <el-sub-menu index="1-4">-->
-                <!--                    <template #title>item four</template>-->
-                <!--                    <el-menu-item index="1-4-1">item one</el-menu-item>-->
-                <!--                  </el-sub-menu>-->
+                  </el-menu-item>
+                </router-link>
                 <!--                </el-sub-menu>-->
                 <el-menu-item index="3" @click="openCopyHis">
                   <el-icon>
@@ -235,7 +200,14 @@ function copyDataFun(row: copy.CopyHis) {
                   </el-menu-item>
                 </router-link>
 
-                <el-menu-item index="5" @click="settingDrawer = true">
+                <router-link to="/onlineTool/command">
+                  <el-menu-item index="5">
+                    <el-icon><DocumentRemove /></el-icon>
+                    <span>{{ t("tool.command") }}</span>
+                  </el-menu-item>
+                </router-link>
+
+                <el-menu-item index="6" @click="settingDrawer = true">
                   <el-icon>
                     <setting/>
                   </el-icon>
