@@ -10,7 +10,11 @@ const fileName = "cache/copyHis.json"
 
 type CopyHis struct {
 	Data string `json:"data"`
-	Time string `json:"time"`
+	// 数据的省略形式
+	DataOmit string `json:"dataOmit"`
+	// 是否进行了省略
+	IsOmit bool   `json:"isOmit"`
+	Time   string `json:"time"`
 }
 
 func SetCopyHis(copyHis []CopyHis) {
@@ -40,6 +44,15 @@ func GetCopyHis() []CopyHis {
 			return []CopyHis{}
 		}
 		return []CopyHis{}
+	}
+	for i := 0; i < len(copyHis); i++ {
+		if len(copyHis[i].Data) > 100 {
+			copyHis[i].IsOmit = true
+			copyHis[i].DataOmit = copyHis[i].Data[0:100] + "..."
+		} else {
+			copyHis[i].IsOmit = false
+			copyHis[i].DataOmit = copyHis[i].Data
+		}
 	}
 	return copyHis
 }

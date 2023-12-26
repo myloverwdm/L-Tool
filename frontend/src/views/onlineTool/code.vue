@@ -79,7 +79,7 @@ function copyData(code: string) {
                         type="primary"
                         @click="copyData(code.code)"
                         text
-                    >复制
+                    >{{ t("globals.copy") }}
                     </el-button>
                     <el-input
                         v-model="code.code"

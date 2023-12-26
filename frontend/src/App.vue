@@ -2,6 +2,7 @@
 import {useI18n} from "vue-i18n";
 import {h, onMounted, onUnmounted, ref} from "vue";
 import {SearchBar} from "search-bar-vue3";
+import type { Action } from 'element-plus'
 import {
   GetCopyData,
   GetCopyHis,
@@ -11,7 +12,7 @@ import {
 } from "../wailsjs/go/main/App";
 import type {configuration, copy} from "../wailsjs/go/models";
 import {DocumentCopy, Tools, Setting, ScaleToOriginal, DocumentRemove} from "@element-plus/icons-vue";
-import {ElMessage, ElNotification} from "element-plus";
+import {ElMessage, ElNotification, ElMessageBox} from "element-plus";
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
@@ -100,12 +101,18 @@ function copyDataFun(row: copy.CopyHis) {
   document.execCommand("copy");
   document.body.removeChild(el);
   ElMessage({
-    message: t("command.copy-success"),
+    message: t("globals.copy-success"),
     type: "success",
   });
 }
 
-
+function clickData(row: string) {
+  console.log(row)
+  ElMessageBox.alert(row, t("index.full-content"), {
+    confirmButtonText: t("globals.close"),
+    callback: (action: Action) => {},
+  })
+}
 </script>
 
 <template>
@@ -159,7 +166,16 @@ function copyDataFun(row: copy.CopyHis) {
     <div class="flex flex-wrap items-center">
 
       <el-table :data="copyData" border style="width: 100%" @row-click="copyDataFun">
-        <el-table-column prop="data" :label="t('index.copy-data')" width="350"/>
+        <el-table-column prop="dataOmit" :label="t('index.copy-data')" width="350" show-overflow-tooltip	>
+          <template v-slot="scope">
+            <div class="table-cell-wrapper">
+              <span class="text">{{ scope.row.dataOmit }}</span>
+              <span class="text" v-if="scope.row.isOmit" @click.stop="clickData(scope.row.data)" style="color: #9494e7; cursor: pointer;">
+                {{ t("index.view") }}
+              </span>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="time" :label="t('index.copy-time')"/>
       </el-table>
 

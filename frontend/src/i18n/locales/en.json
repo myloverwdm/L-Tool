@@ -10,6 +10,7 @@
     "delete-success": "Deleted successfully",
     "delete-fail": "Deletion failed",
     "search": "Search",
+    "copy": "copy",
     "copy-success": "Copied successfully"
   },
   "index": {
@@ -21,7 +22,9 @@
     "copy-data": "Cut Data",
     "copy-time": "Cut Time",
     "copy-header": "Cutting Board History",
-    "code": "Common Codes"
+    "code": "Common Codes",
+    "view": "View",
+    "full-content": "Complete Content Usage"
   },
   "tool": {
     "timestamp": "Timestamp Converter",

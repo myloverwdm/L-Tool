@@ -88,6 +88,8 @@ export namespace copy {
 	
 	export class CopyHis {
 	    data: string;
+	    dataOmit: string;
+	    isOmit: boolean;
 	    time: string;
 	
 	    static createFrom(source: any = {}) {
@@ -97,6 +99,8 @@ export namespace copy {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.data = source["data"];
+	        this.dataOmit = source["dataOmit"];
+	        this.isOmit = source["isOmit"];
 	        this.time = source["time"];
 	    }
 	}
