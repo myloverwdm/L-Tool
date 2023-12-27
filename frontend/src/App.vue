@@ -79,6 +79,8 @@ let settingDrawer = ref(false);
 let showSearchBar = ref(true);
 let copyhis = ref(false);
 let copyData = ref(Array<copy.CopyHis>());
+let copyHisDataOmit = ref("");
+let copyHisDataOmitHid = ref(false);
 const listLanguages = ref<configuration.Language[]>([]);
 
 const onclickLanguageHandle = (item: string) => {
@@ -107,11 +109,8 @@ function copyDataFun(row: copy.CopyHis) {
 }
 
 function clickData(row: string) {
-  console.log(row)
-  ElMessageBox.alert(row, t("index.full-content"), {
-    confirmButtonText: t("globals.close"),
-    callback: (action: Action) => {},
-  })
+  copyHisDataOmit.value = row;
+  copyHisDataOmitHid.value = true;
 }
 </script>
 
@@ -182,6 +181,21 @@ function clickData(row: string) {
     </div>
   </el-drawer>
   <!--  copy history end-->
+
+<!--  copy history dataOmit start-->
+  <el-dialog v-model="copyHisDataOmitHid" :title="t('index.full-content')">
+    <el-input
+        v-model="copyHisDataOmit"
+        readonly
+        :autosize="{ minRows: 2, maxRows: 18 }"
+        type="textarea"
+        class="no-wrap-textarea"
+        placeholder="Please input"
+        resize="none"
+    />
+  </el-dialog>
+  <!--  copy history dataOmit end-->
+
   <div class="common-layout">
     <el-container>
       <el-aside width="200px">
@@ -250,6 +264,9 @@ function clickData(row: string) {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
+}
+.no-wrap-textarea textarea {
+  text-overflow: ellipsis;
 }
 
 body {
