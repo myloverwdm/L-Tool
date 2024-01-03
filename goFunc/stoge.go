@@ -8,9 +8,12 @@ import (
 
 var (
 	GlobalMap map[string]string
+
+	SettingMapCache SystemSetting
 )
 
-const cacheFileName = "cache/cacheLS.json"
+const cacheFileName = "cache/cache.json"
+const settingFileName = "cache/setting.json"
 
 type cache struct{}
 
@@ -45,7 +48,7 @@ func Set(key string, value string) {
 	allCache[key] = value
 	marshal, err := json.Marshal(allCache)
 	if err == nil {
-		Write(string(marshal))
+		Write(string(marshal), cacheFileName)
 		GlobalMap[key] = value
 	}
 }
@@ -73,13 +76,71 @@ func Remove() {
 	}
 }
 
-func Write(data string) {
+func Write(data string, fileName string) {
 	// fmt.Println("写入缓存")
 	content := []byte(data)
 	// 写入文件
 	os.MkdirAll("cache", os.ModePerm)
-	err := ioutil.WriteFile(cacheFileName, content, 0644)
+	err := ioutil.WriteFile(fileName, content, 0644)
 	if err != nil {
-		// fmt.Println(err)
+
 	}
+}
+
+func GetOrDefaultAllSettings() SystemSetting {
+	if SettingMapCache != (SystemSetting{}) {
+		return SettingMapCache
+	}
+	// 读取文件
+	file, err := ioutil.ReadFile(settingFileName)
+	if err != nil {
+		return BuildDefaultSetting()
+	}
+	// file转化为SystemSetting
+	err2 := json.Unmarshal(file, &SettingMapCache)
+	if err2 == nil {
+		return SettingMapCache
+	}
+	return BuildDefaultSetting()
+}
+
+func BuildDefaultSetting() SystemSetting {
+	SettingMapCache = SystemSetting{
+		Language: "zh-Hans",
+		CopySetting: CopySetting{
+			MaxCount:        "100",
+			MaxCountOneData: "100",
+		},
+	}
+	return SettingMapCache
+}
+
+func UpdateSystemSettings(setting string) {
+	var sysSet SystemSetting
+	err2 := json.Unmarshal([]byte(setting), &sysSet)
+	if err2 != nil {
+
+	}
+	marshal, err := json.Marshal(sysSet)
+	if err == nil {
+		Write(string(marshal), settingFileName)
+		SettingMapCache = sysSet
+	}
+}
+
+// SystemSetting /**
+type SystemSetting struct {
+	// 系统语言设置
+	Language string `json:"language"`
+
+	// 剪切板历史相关的设置
+	CopySetting CopySetting `json:"copySetting"`
+}
+
+// CopySetting /**
+type CopySetting struct {
+	// 剪切板历史最大条数
+	MaxCount json.Number `json:"maxCount"`
+	// 每条数据展示的最大条数是多少, 超过的部分使用 ...省略
+	MaxCountOneData json.Number `json:"maxCountOneData"`
 }

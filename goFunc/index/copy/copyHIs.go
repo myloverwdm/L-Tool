@@ -1,9 +1,11 @@
 package copy
 
 import (
+	"LTool/goFunc"
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"unicode/utf8"
 )
 
 const fileName = "cache/copyHis.json"
@@ -45,10 +47,17 @@ func GetCopyHis() []CopyHis {
 		}
 		return []CopyHis{}
 	}
+	allSettings := goFunc.GetOrDefaultAllSettings()
+	i, err := allSettings.CopySetting.MaxCountOneData.Int64()
+	maxCount := int(i)
 	for i := 0; i < len(copyHis); i++ {
-		if len(copyHis[i].Data) > 100 {
-			copyHis[i].IsOmit = true
-			copyHis[i].DataOmit = copyHis[i].Data[0:100] + "..."
+		// 字符串切分
+		if utf8.RuneCountInString(copyHis[i].Data) > maxCount {
+			runes := []rune(copyHis[i].Data)
+			if len(runes) > maxCount {
+				copyHis[i].IsOmit = true
+				copyHis[i].DataOmit = string(runes[:maxCount]) + "..."
+			}
 		} else {
 			copyHis[i].IsOmit = false
 			copyHis[i].DataOmit = copyHis[i].Data

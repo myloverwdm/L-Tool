@@ -107,14 +107,6 @@ func (a *App) UpdateKafkaForm(kafkaForm index.KafkaForm) string {
 	return index.UpdateKafkaForm(kafkaForm)
 }
 
-func (a *App) GetNowLanguage() string {
-	return index.GetNowLanguage()
-}
-
-func (a *App) SetNowLanguage(language string) {
-	index.SetNowLanguage(language)
-}
-
 func (a *App) BrowserOpenURL(url string) {
 	err := browser.OpenURL(url)
 	if err != nil {
@@ -142,8 +134,12 @@ func (a *App) GetCopyData() {
 	}
 	// 更新新的剪切板
 	copyHis = append(copyHis, copy.CopyHis{Data: content, Time: time.Now().Format("2006-01-02 15:04")})
-	if len(copyHis) > 100 {
-		copyHis = copyHis[len(copyHis)-100:]
+
+	allSettings := goFunc.GetOrDefaultAllSettings()
+	i, err := allSettings.CopySetting.MaxCount.Int64()
+	maxCount := int(i)
+	if len(copyHis) > maxCount {
+		copyHis = copyHis[len(copyHis)-maxCount:]
 	}
 	copy.SetCopyHis(copyHis)
 }
@@ -154,4 +150,12 @@ func (a *App) GetCopyHis() []copy.CopyHis {
 
 func (a *App) GetCodeGroup() []code.CodeGroup {
 	return code.GetCodeGroup()
+}
+
+func (a *App) GetOrDefaultAllSettings() goFunc.SystemSetting {
+	return goFunc.GetOrDefaultAllSettings()
+}
+
+func (a *App) UpdateSystemSettings(setting string) {
+	goFunc.UpdateSystemSettings(setting)
 }

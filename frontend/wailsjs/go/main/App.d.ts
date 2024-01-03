@@ -27,9 +27,9 @@ export function GetKafkaForm():Promise<index.KafkaForm>;
 
 export function GetLanguageList():Promise<Array<configuration.Language>>;
 
-export function GetNowLanguage():Promise<string>;
-
 export function GetOnlineToolsList():Promise<Array<onlineTools.OnlineTool>>;
+
+export function GetOrDefaultAllSettings():Promise<goFunc.SystemSetting>;
 
 export function GetTopicAndPartition():Promise<Array<index.TopicAndPartition>>;
 
@@ -41,6 +41,6 @@ export function ReadZkNode(arg1:string):Promise<index.ZkData>;
 
 export function SetForm(arg1:index.ZkForm):Promise<string>;
 
-export function SetNowLanguage(arg1:string):Promise<void>;
-
 export function UpdateKafkaForm(arg1:index.KafkaForm):Promise<string>;
+
+export function UpdateSystemSettings(arg1:string):Promise<void>;

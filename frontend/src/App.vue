@@ -7,18 +7,19 @@ import {
   GetCopyData,
   GetCopyHis,
   GetLanguageList,
-  GetNowLanguage,
-  SetNowLanguage
+  GetOrDefaultAllSettings,
+  UpdateSystemSettings
 } from "../wailsjs/go/main/App";
 import type {configuration, copy} from "../wailsjs/go/models";
-import {DocumentCopy, Tools, Setting, ScaleToOriginal, DocumentRemove} from "@element-plus/icons-vue";
+import {DocumentCopy, Tools, Setting, ScaleToOriginal, DocumentRemove, QuestionFilled} from "@element-plus/icons-vue";
 import {ElMessage, ElNotification, ElMessageBox} from "element-plus";
+import {goFunc} from "../wailsjs/go/models";
 
 const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+
 };
 const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+
 };
 
 // import {GetItemList} from '../../wailsjs/go/main/APP'
@@ -30,20 +31,65 @@ document.body.addEventListener("click", function (event) {
 onUnmounted(() => {
   document.removeEventListener("keydown", keyboardDownBack, true);
 });
+
 var timer: number | undefined;
 onMounted(() => {
   document.addEventListener("keydown", keyboardDownBack, true);
-  GetNowLanguage().then((s) => {
-    locale.value = s;
-  });
   GetLanguageList().then((s) => {
     listLanguages.value = s;
+  });
+  // 得到所有的配置
+  GetOrDefaultAllSettings().then((s) => {
+    systemSetting.value = s;
+    systemSettingSnapshot.value = s;
+    locale.value = s.language;
   });
   // 获取剪切板
   timer = setInterval(() => {
     GetCopyData();
   }, 1000);
 });
+
+
+
+function openSettingDrawer() {
+  // 深拷贝
+  systemSettingSnapshot.value = JSON.parse(JSON.stringify(systemSetting.value));
+  settingDrawer.value = true;
+}
+
+function updateSetting() {
+  // 更新
+  UpdateSystemSettings(JSON.stringify(systemSettingSnapshot.value));
+  systemSetting.value = JSON.parse(JSON.stringify(systemSettingSnapshot.value));
+  // 修改文字
+  locale.value = systemSetting.value.language;
+  // 提示成功
+  ElMessage({
+    message: t("globals.copy-success"),
+    type: "success",
+  });
+  // 关闭弹窗
+  settingDrawer.value = false;
+}
+
+function handleInput1() {
+  let number = parseInt(systemSettingSnapshot.value.copySetting.maxCount);
+  if (number <= 0) {
+    systemSettingSnapshot.value.copySetting.maxCount = "100";
+  } else if (number > 10000) {
+    systemSettingSnapshot.value.copySetting.maxCount = "10000";
+  }
+}
+
+function handleInput2() {
+  let number = parseInt(systemSettingSnapshot.value.copySetting.maxCountOneData);
+  if (number <= 0) {
+    systemSettingSnapshot.value.copySetting.maxCountOneData = "100";
+  } else if (number > 10000) {
+    systemSettingSnapshot.value.copySetting.maxCountOneData = "10000";
+  }
+}
 
 function displayName(name: string) {
   const elements = document.querySelectorAll("." + name);
@@ -81,12 +127,15 @@ let copyhis = ref(false);
 let copyData = ref(Array<copy.CopyHis>());
 let copyHisDataOmit = ref("");
 let copyHisDataOmitHid = ref(false);
+let systemSetting = ref(new goFunc.SystemSetting());
+let systemSettingSnapshot = ref(new goFunc.SystemSetting());
+const visible = ref(false);
+
 const listLanguages = ref<configuration.Language[]>([]);
 
 const onclickLanguageHandle = (item: string) => {
-  SetNowLanguage(item);
-  locale.value = item;
-};
+  systemSettingSnapshot.value.language = item;
+}
 
 function openCopyHis() {
   GetCopyHis().then((s) => {
@@ -110,6 +159,7 @@ function copyDataFun(row: copy.CopyHis) {
 
 function clickData(row: string) {
   copyHisDataOmit.value = row;
+
   copyHisDataOmitHid.value = true;
 }
 </script>
@@ -131,28 +181,54 @@ function clickData(row: string) {
       <h4>{{ t("index.setting") }}</h4>
     </template>
     <div class="flex flex-wrap items-center">
-      <el-dropdown>
-        <el-button class="popperClass">
-          {{ t("index.language") }}
-          <el-icon class="el-icon--right">
-            <!--          <setting />-->
-          </el-icon>
-        </el-button>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <div
-                class="header-list"
-                v-for="(item, index) in listLanguages"
-                :key="index"
-            >
-              <el-dropdown-item
-                  @click="onclickLanguageHandle(item.languageCode)"
-              >{{ item.name }}
-              </el-dropdown-item>
-            </div>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
+      <el-form
+          label-position="right"
+          label-width="100px"
+          :model="systemSettingSnapshot"
+          style="max-width: 460px"
+      >
+        <el-form-item :label="t('index.language')">
+          <el-select v-model="systemSettingSnapshot.language" class="m-2" placeholder="Select">
+            <el-option
+                v-for="item in listLanguages"
+                :key="item.languageCode"
+                :label="item.name"
+                :value="item.languageCode"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="">
+          <el-tag>{{ t("copy-his.setting") }}</el-tag>
+        </el-form-item>
+
+        <el-form-item :label="t('copy-his.maxCount')">
+          <el-input v-model="systemSettingSnapshot.copySetting.maxCount"  @input="handleInput1" type="number" :min="1" :max="10000"/>
+        </el-form-item>
+        <el-form-item :label="t('copy-his.maxCountOneData')">
+          <el-input
+              v-model="systemSettingSnapshot.copySetting.maxCountOneData"
+              @input="handleInput2"
+              type="number"
+              :min="40" :max="10000"
+          >
+            <template #append>
+              <el-tooltip :visible="visible" effect="light">
+                <template #content>
+                  <span style="display: inline-block; word-wrap: break-word; word-break: break-all; max-width: 100ch;color: #ab8585">{{
+                    t("copy-his.tip")
+                  }}</span>
+                </template>
+                <el-icon @mouseenter="visible = true" @mouseleave="visible = false"><QuestionFilled/></el-icon>
+              </el-tooltip>
+            </template>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="updateSetting">{{ t("globals.submit") }}</el-button>
+        </el-form-item>
+      </el-form>
+
     </div>
   </el-drawer>
   <!--  setting end-->
@@ -237,7 +313,7 @@ function clickData(row: string) {
                   </el-menu-item>
                 </router-link>
 
-                <el-menu-item index="6" @click="settingDrawer = true">
+                <el-menu-item index="6" @click="openSettingDrawer">
                   <el-icon>
                     <setting/>
                   </el-icon>

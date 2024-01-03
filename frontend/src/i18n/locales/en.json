@@ -88,5 +88,11 @@
     "index": "Index",
     "command": "Command",
     "description": "Description"
+  },
+  "copy-his": {
+    "setting": "Settings related to clipboard history",
+    "maxCount": "record count",
+    "maxCountOneData": "data length",
+    "tip": "If the length of text in the history record of a certain clipboard exceeds the configuration, the excess part will be replaced with an ellipsis and a display button will be added to echo the complete content"
   }
 }

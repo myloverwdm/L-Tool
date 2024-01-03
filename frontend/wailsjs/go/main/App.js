@@ -42,12 +42,12 @@ export function GetLanguageList() {
   return window['go']['main']['App']['GetLanguageList']();
 }
 
-export function GetNowLanguage() {
-  return window['go']['main']['App']['GetNowLanguage']();
-}
-
 export function GetOnlineToolsList() {
   return window['go']['main']['App']['GetOnlineToolsList']();
+}
+
+export function GetOrDefaultAllSettings() {
+  return window['go']['main']['App']['GetOrDefaultAllSettings']();
 }
 
 export function GetTopicAndPartition() {
@@ -70,10 +70,10 @@ export function SetForm(arg1) {
   return window['go']['main']['App']['SetForm'](arg1);
 }
 
-export function SetNowLanguage(arg1) {
-  return window['go']['main']['App']['SetNowLanguage'](arg1);
-}
-
 export function UpdateKafkaForm(arg1) {
   return window['go']['main']['App']['UpdateKafkaForm'](arg1);
+}
+
+export function UpdateSystemSettings(arg1) {
+  return window['go']['main']['App']['UpdateSystemSettings'](arg1);
 }
