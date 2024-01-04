@@ -23,7 +23,6 @@ onMounted(() => {
 
 
   GetCommand().then((value) => {
-    console.log(value);
     commandData.value = value;
   });
 })
@@ -84,11 +83,12 @@ function AAA(id: string) {
       <el-main>
 
         <div class="common-layout">
+
           <el-container>
             <el-header height="30px">
               <el-table
                   :data="[]"
-                  style="width: 100%"
+                  style="width: 100%;margin-top:9px"
                   id="top-table"
                   border
               >
@@ -101,7 +101,7 @@ function AAA(id: string) {
               <el-scrollbar max-height="100vh" ref="scrollbarRef" id="el-scrollbar">
                 <div v-for="(value, key) in commandData" :key="key" :id="value.name">
                   <h1 style="font-size: 20px" :ref="value.name">{{ value.name }}</h1>
-                  <br/>
+
                   <el-table
                       :data="value.commands"
                       style="width: 100%"
@@ -114,7 +114,7 @@ function AAA(id: string) {
                     <el-table-column prop="desc" :label="t('command.command')" width="500"/>
                     <el-table-column prop="command" :label="t('command.description')"/>
                   </el-table>
-                  <br/>
+
                 </div>
               </el-scrollbar>
             </el-main>

@@ -21,7 +21,8 @@
     "copy-header": "剪切板历史记录",
     "code": "常用代码",
     "view": "显示",
-    "full-content": "完整内容"
+    "full-content": "完整内容",
+    "db": "数据库"
   },
   "tool": {
     "timestamp": "时间戳转化",

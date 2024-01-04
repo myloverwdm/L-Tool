@@ -24,7 +24,8 @@
     "copy-header": "Cutting Board History",
     "code": "Common Codes",
     "view": "View",
-    "full-content": "Complete Content Usage"
+    "full-content": "Complete Content Usage",
+    "db": "DataBase"
   },
   "tool": {
     "timestamp": "Timestamp Converter",

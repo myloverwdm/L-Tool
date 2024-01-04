@@ -12,7 +12,7 @@ const codeGroup = ref(Array<code.CodeGroup>());
 const {t, availableLocales: languages, locale} = useI18n();
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
-  console.log(tab, event)
+
 }
 
 onMounted(() => {

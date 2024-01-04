@@ -144,3 +144,19 @@ type CopySetting struct {
 	// 每条数据展示的最大条数是多少, 超过的部分使用 ...省略
 	MaxCountOneData json.Number `json:"maxCountOneData"`
 }
+
+func UpdateFileCache(filename, content string) {
+	os.MkdirAll("cache", os.ModePerm)
+	err := ioutil.WriteFile(filename, []byte(content), 0644)
+	if err != nil {
+
+	}
+}
+
+func GetFileCache(filename string) string {
+	file, err := ioutil.ReadFile(filename)
+	if err == nil {
+		return string(file)
+	}
+	return ""
+}

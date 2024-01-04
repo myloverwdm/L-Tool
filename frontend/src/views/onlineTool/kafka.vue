@@ -45,7 +45,6 @@ function clickTopic(topicNameAndPartition: index.TopicAndPartition) {
 }
 
 function changeS() {
-  console.log(input2.value)
 }
 
 function submitForm() {

@@ -159,3 +159,11 @@ func (a *App) GetOrDefaultAllSettings() goFunc.SystemSetting {
 func (a *App) UpdateSystemSettings(setting string) {
 	goFunc.UpdateSystemSettings(setting)
 }
+
+func (a *App) UpdateFileCache(filename, content string) {
+	goFunc.UpdateFileCache(filename, content)
+}
+
+func (a *App) GetFileCache(filename string) string {
+	return goFunc.GetFileCache(filename)
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {ElMessage} from "element-plus";
 import {JsonToXml,} from "../../../wailsjs/go/main/App";
 import Codemirror from "codemirror-editor-vue3";
@@ -19,10 +19,14 @@ import "codemirror-editor-vue3/node_modules/codemirror/addon/hint/show-hint.css"
 import "codemirror-editor-vue3/node_modules/codemirror/addon/hint/show-hint.js";
 import "codemirror-editor-vue3/node_modules/codemirror/addon/hint/sql-hint.js";
 import "codemirror-editor-vue3/node_modules/codemirror/addon/hint/xml-hint.js";
-
+import {
+  UpdateFileCache,
+  GetFileCache,
+} from "../../../wailsjs/go/main/App";
 import {useI18n} from "vue-i18n";
 import {Close} from "@element-plus/icons-vue";
 const {t, availableLocales: languages, locale} = useI18n();
+
 const dialogTableVisible = ref(false);
 const xmlData = ref("");
 let drawerDiff = ref(false);
@@ -115,6 +119,28 @@ function jsonToXmls() {
 }
 
 let code = ref("");
+let codeChange = ref(false);
+const jsonFileName = "cache/jsonCache";
+onMounted(() => {
+  setTimeout(() => {
+    // 得到上次缓存的json
+    GetFileCache(jsonFileName).then((s) => {
+      code.value = s;
+      // 需要延时执行
+    });
+  }, 100);
+});
+
+function inputS() {
+  if (!codeChange.value) {
+    codeChange.value = true;
+    setTimeout(() => {
+      UpdateFileCache(jsonFileName, code.value);
+    }, 1000);
+    codeChange.value = false;
+  }
+}
+
 let diffRight = ref("");
 let cmOptions = ref({
   // mode: ["text/javascript", "text/xml"], // Language mode
@@ -208,9 +234,12 @@ function hiddenS() {
       :options="cmOptions"
       border
       placeholder="test placeholder"
-      :height="800"
+      :height="760"
+      @input="inputS"
   />
-  <span>{{ t("tool-json.str-length") }}</span><span >{{ code.length }}</span>
+  <div style="font-size: 15px">
+    <span>{{ t("tool-json.str-length") }}</span><span >{{ code.length }}</span>
+  </div>
 </template>
 
 <style>
@@ -427,6 +456,11 @@ code.hljs {
 .CodeMirror-lines {
   padding: 4px 0; /* Vertical padding around content */
 }
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+
 
 .CodeMirror pre.CodeMirror-line,
 .CodeMirror pre.CodeMirror-line-like {
@@ -579,7 +613,7 @@ code.hljs {
 
 .cm-header,
 .cm-strong {
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .cm-em {
@@ -809,10 +843,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
   background-color: transparent;
 }
 
-.CodeMirror-lines {
-  cursor: text;
-  min-height: 1px; /* prevents collapsing before first draw */
-}
 
 .CodeMirror pre.CodeMirror-line,
 .CodeMirror pre.CodeMirror-line-like {
@@ -970,5 +1000,9 @@ span.CodeMirror-selectedtext {
 highlightable-input {
   width: 300px;
   height: 100px;
+}
+
+pre {
+  font-weight: 10 !important;
 }
 </style>

@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 import {GetOnlineToolsList} from "../../wailsjs/go/main/App";
 import type {onlineTools} from "../../wailsjs/go/models";
 import {useI18n} from "vue-i18n";
+import app from "../App.vue";
 
 const {t, availableLocales: languages, locale} = useI18n();
 
@@ -16,22 +17,36 @@ onMounted(() => {
   });
 });
 
+
+const props = defineProps({
+  // 这是父组件传递过来的函数
+  handleTabsEdit: {
+    type: Function
+  }
+});
+
+function addTab(argetName: string, action: string, name: string) {
+  if (props !== undefined && props.handleTabsEdit !== undefined) {
+    props.handleTabsEdit(argetName, action, name);
+  }
+}
+
 </script>
 
 <template>
-  <el-slider v-model="size"/>
-  <el-scrollbar max-height="95vh" max="89">
+  <br/>
+<!--  <el-scrollbar max-height="95vh" max="89">-->
     <el-space wrap :size="size">
       <el-card class="box-card" v-for="(item, index) in onlineToolList" :key="index" size="100px">
-        <router-link :to="item.router" tag="span">
-          <el-button >{{ t(item.name) }}</el-button>
-        </router-link>
+        <el-button
+          @click="addTab(item.name, item.router, 'home' + index)">
+          {{ t(item.name) }}</el-button>
       </el-card>
     </el-space>
-  </el-scrollbar>
+<!--  </el-scrollbar>-->
 </template>
 
-<style>
+<style scoped>
 .custom-button {
   background-color: #628a93; /* 默认背景色 */
   color: #000000; /* 默认字体颜色 */

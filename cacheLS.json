@@ -1,1 +1,0 @@
-{"Language-xxx":"{\"Name\":\"zh-Hans\"}","Zookeeper":"{\"address\":\"127.0.0.1:2181\",\"zkData\":{\"nextPath\":null,\"data\":\"\",\"statData\":{}}}","kafkaForm":"{\"connection\":\"10.100.2.191:6667,10.100.2.192:6667,10.100.2.193:6667\"}"}

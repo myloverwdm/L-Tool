@@ -45,6 +45,11 @@ const router = createRouter({
       path: "/onlineTool/code",
       name: "code",
       component: () => import("../views/onlineTool/code.vue"),
+    },
+    {
+      path: "/db/dbRegister",
+      name: "dbRegister",
+      component: () => import("../views/db/dbRegister.vue"),
     }
   ],
 });

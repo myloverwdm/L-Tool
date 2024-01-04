@@ -95,7 +95,6 @@ function zhuanh2() {
     return;
   }
   var myDiv = elementById.value;
-  console.log(myDiv)
   let timestamp = Date.parse(myDiv);
   let selectElement = getSelectElement({id: "fruits2"});
   if ("s" === selectElement) {

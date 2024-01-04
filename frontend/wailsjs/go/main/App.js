@@ -30,6 +30,10 @@ export function GetCopyHis() {
   return window['go']['main']['App']['GetCopyHis']();
 }
 
+export function GetFileCache(arg1) {
+  return window['go']['main']['App']['GetFileCache'](arg1);
+}
+
 export function GetItemList() {
   return window['go']['main']['App']['GetItemList']();
 }
@@ -68,6 +72,10 @@ export function ReadZkNode(arg1) {
 
 export function SetForm(arg1) {
   return window['go']['main']['App']['SetForm'](arg1);
+}
+
+export function UpdateFileCache(arg1, arg2) {
+  return window['go']['main']['App']['UpdateFileCache'](arg1, arg2);
 }
 
 export function UpdateKafkaForm(arg1) {

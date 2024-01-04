@@ -21,6 +21,8 @@ export function GetCopyData():Promise<void>;
 
 export function GetCopyHis():Promise<Array<copy.CopyHis>>;
 
+export function GetFileCache(arg1:string):Promise<string>;
+
 export function GetItemList():Promise<Array<configuration.Index>>;
 
 export function GetKafkaForm():Promise<index.KafkaForm>;
@@ -40,6 +42,8 @@ export function JsonToXml(arg1:string):Promise<goFunc.LTResponse>;
 export function ReadZkNode(arg1:string):Promise<index.ZkData>;
 
 export function SetForm(arg1:index.ZkForm):Promise<string>;
+
+export function UpdateFileCache(arg1:string,arg2:string):Promise<void>;
 
 export function UpdateKafkaForm(arg1:index.KafkaForm):Promise<string>;
 
