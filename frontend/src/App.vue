@@ -359,8 +359,7 @@ function clickData(row: string) {
         <el-table-column
             prop="dataOmit"
             :label="t('index.copy-data')"
-            width="350"
-            show-overflow-tooltip
+            width="340"
         >
           <template v-slot="scope">
             <div class="table-cell-wrapper">
@@ -520,18 +519,20 @@ function clickData(row: string) {
   </div>
 </template>
 
-<style scoped>
+<style>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
 }
-
+body {
+  overflow: hidden;
+}
 .no-wrap-textarea textarea {
   text-overflow: ellipsis;
 }
 
 body {
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 button {
