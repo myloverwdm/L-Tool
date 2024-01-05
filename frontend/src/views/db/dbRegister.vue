@@ -164,7 +164,7 @@ function dateFormat(time: number) {
   return formattedDate;
 }
 
-function formatTwoDigits(number) {
+function formatTwoDigits(number: string | number) {
   return number < 10 ? '0' + number : number;
 }
 

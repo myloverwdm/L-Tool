@@ -116,6 +116,8 @@
     "username": "Username",
     "password": "Password",
     "ip": "IP",
-    "ping": "Ping"
+    "ping": "Ping",
+    "same-db": "Database service with the same name has already been registered",
+    "db-404": "Database Service Not Found"
   }
 }
