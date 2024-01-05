@@ -3,6 +3,7 @@ package main
 import (
 	"LTool/configuration"
 	"LTool/goFunc"
+	"LTool/goFunc/db"
 	"LTool/goFunc/index"
 	"LTool/goFunc/index/code"
 	"LTool/goFunc/index/copy"
@@ -166,4 +167,16 @@ func (a *App) UpdateFileCache(filename, content string) {
 
 func (a *App) GetFileCache(filename string) string {
 	return goFunc.GetFileCache(filename)
+}
+
+func (a *App) GetAllDataBaseInfo() []db.DataBaseInfo {
+	return db.GetAllDataBaseInfo()
+}
+
+func (a *App) AddOrUpdateDataBaseInfo(databaseInfo db.DataBaseInfo, isAdd bool) string {
+	return db.AddOrUpdateDataBaseInfo(databaseInfo, isAdd)
+}
+
+func (a *App) DeleteOneDataBaseInfo(dbName string) string {
+	return db.DeleteOneDataBaseInfo(dbName)
 }

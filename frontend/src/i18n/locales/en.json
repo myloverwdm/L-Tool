@@ -11,7 +11,17 @@
     "delete-fail": "Deletion failed",
     "search": "Search",
     "copy": "copy",
-    "copy-success": "Copied successfully"
+    "copy-success": "Copied successfully",
+    "please-input": "Please input",
+    "reg": "Register",
+    "operations": "Operations",
+    "operations-success": "Operations Success",
+    "edit": "edit",
+    "delete": "delete",
+    "empty-text": "No Data",
+    "sure-delete": "Are you sure you want to delete it?",
+    "warning": "Warning",
+    "unknown-error": "Unknown Error"
   },
   "index": {
     "tool": "Tool",
@@ -95,5 +105,17 @@
     "maxCount": "record count",
     "maxCountOneData": "data length",
     "tip": "If the length of text in the history record of a certain clipboard exceeds the configuration, the excess part will be replaced with an ellipsis and a display button will be added to echo the complete content"
+  },
+  "db": {
+    "name": "Name",
+    "address": "Address",
+    "port": "port",
+    "dbType": "DB Type",
+    "regTime": "Register Time",
+    "updateTime": "Update Time",
+    "username": "Username",
+    "password": "Password",
+    "ip": "IP",
+    "ping": "Ping"
   }
 }

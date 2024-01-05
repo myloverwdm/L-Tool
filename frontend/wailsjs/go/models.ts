@@ -107,6 +107,41 @@ export namespace copy {
 
 }
 
+export namespace db {
+	
+	export class DataBaseInfo {
+	    name: string;
+	    dbType: string;
+	    address: string;
+	    port: string;
+	    userName: string;
+	    password: string;
+	    regTime: number;
+	    updateTime: number;
+	    RegTimeStr: string;
+	    updateTimeStr: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new DataBaseInfo(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.name = source["name"];
+	        this.dbType = source["dbType"];
+	        this.address = source["address"];
+	        this.port = source["port"];
+	        this.userName = source["userName"];
+	        this.password = source["password"];
+	        this.regTime = source["regTime"];
+	        this.updateTime = source["updateTime"];
+	        this.RegTimeStr = source["RegTimeStr"];
+	        this.updateTimeStr = source["updateTimeStr"];
+	    }
+	}
+
+}
+
 export namespace goFunc {
 	
 	export class CopySetting {

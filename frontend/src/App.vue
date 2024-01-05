@@ -16,7 +16,7 @@ import {
 } from "../wailsjs/go/main/App";
 import type {configuration, copy} from "../wailsjs/go/models";
 import {goFunc} from "../wailsjs/go/models";
-import {DocumentCopy, DocumentRemove, QuestionFilled, ScaleToOriginal, Setting, Tools,} from "@element-plus/icons-vue";
+import {DocumentCopy, DocumentRemove, QuestionFilled, ScaleToOriginal, Setting, Tools,Wallet} from "@element-plus/icons-vue";
 import commandVue from "../src/views/onlineTool/command.vue";
 import HomeView from "../src/views/HomeView.vue";
 import codeVue from "../src/views/onlineTool/code.vue";
@@ -149,7 +149,7 @@ function updateSetting() {
   locale.value = systemSetting.value.language;
   // 提示成功
   ElMessage({
-    message: t("globals.copy-success"),
+    message: t("globals.operations-success"),
     type: "success",
   });
   // 关闭弹窗
@@ -447,15 +447,15 @@ function clickData(row: string) {
                   <span>{{ t("tool.command") }}</span>
                 </el-menu-item>
 
-<!--                <el-menu-item-->
-<!--                    index="6"-->
-<!--                    @click="handleTabsEdit('index.db', '/db/dbRegister', '6')"-->
-<!--                >-->
-<!--                  <el-icon>-->
-<!--                    <DocumentRemove/>-->
-<!--                  </el-icon>-->
-<!--                  <span>{{ t("index.db") }}</span>-->
-<!--                </el-menu-item>-->
+                <el-menu-item
+                    index="6"
+                    @click="handleTabsEdit('index.db', '/db/dbRegister', '6')"
+                >
+                  <el-icon>
+                    <Wallet/>
+                  </el-icon>
+                  <span>{{ t("index.db") }}</span>
+                </el-menu-item>
 
                 <el-menu-item index="7" @click="openSettingDrawer">
                   <el-icon>

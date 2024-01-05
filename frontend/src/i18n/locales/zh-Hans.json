@@ -8,7 +8,19 @@
     "add": "新增",
     "search": "搜索",
     "copy": "复制",
-    "copy-success": "复制成功"
+    "copy-success": "复制成功",
+    "please-input": "请输入",
+    "reg": "注册",
+    "operations": "操作",
+    "operations-success": "操作成功",
+    "edit": "编辑",
+    "delete": "删除",
+    "empty-text": "暂无数据",
+    "sure-delete": "是否确认删除？",
+    "warning": "警告",
+    "delete-success": "删除成功",
+    "unknown-error": "未知错误"
+
   },
   "index": {
     "tool": "工具",
@@ -95,5 +107,19 @@
     "maxCount": "存储记录数",
     "maxCountOneData": "单条数据长度",
     "tip": "若是某个剪切板历史记录文字长度超过该配置，则超过的部分使用省略号代替，且增加显示按钮，用于回显完整内容"
+  },
+  "db": {
+    "name": "名称",
+    "address": "地址",
+    "port": "端口号",
+    "dbType": "数据库类型",
+    "regTime": "注册时间",
+    "updateTime": "更新时间",
+    "username": "用户名",
+    "password": "密码",
+    "ip": "IP地址",
+    "ping": "测试连接",
+    "same-db": "已注册了同名的数据库服务",
+    "db-404": "未找到该数据库服务"
   }
 }
