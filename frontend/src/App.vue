@@ -23,6 +23,7 @@ import codeVue from "../src/views/onlineTool/code.vue";
 import timeStampView from "../src/views/onlineTool/Timestamp.vue";
 import zkView from "../src/views/onlineTool/zk.vue";
 import dbRegisterVue from "../src/views/db/dbRegister.vue";
+import dbDetails from "../src/views/db/dbDetails.vue";
 import JsonView from "../src/views/onlineTool/json.vue";
 
 // page start
@@ -41,14 +42,15 @@ const editableTabs = ref([
     title: "index.tool",
     name: "1",
     page: "/",
+    suffix : ""
   },
 ]);
 
 // import {GetItemList} from '../../wailsjs/go/main/APP'
-const {t, availableLocales: languages, locale} = useI18n();
+const {t, te,availableLocales: languages, locale} = useI18n();
 let tabIndex = 2;
 
-function handleTabsEdit(targetName: string, action: string, name: string) {
+function handleTabsEdit(targetName: string, action: string, name: string, suffix="") {
   for (let i = 0; i < editableTabs.value.length; i++) {
     if (editableTabs.value[i].name == name) {
       editableTabsValue.value = name;
@@ -59,6 +61,7 @@ function handleTabsEdit(targetName: string, action: string, name: string) {
     title: targetName,
     name: name,
     page: action,
+    suffix: suffix,
   });
   editableTabsValue.value = name;
   updateTabCache();
@@ -205,6 +208,10 @@ const keyboardDownBack = (event: KeyboardEvent) => {
   }
 };
 
+function labelValue(title : string, suffix : string) {
+ return t(title) + (suffix == null ? "" : suffix);
+}
+
 //=========================================setting======================================
 let settingDrawer = ref(false);
 let showSearchBar = ref(true);
@@ -246,6 +253,10 @@ function clickData(row: string) {
   copyHisDataOmit.value = row;
 
   copyHisDataOmitHid.value = true;
+}
+// 屏蔽系统右键菜单
+document.oncontextmenu = function (e) {
+  return false;
 }
 </script>
 
@@ -480,10 +491,11 @@ function clickData(row: string) {
               @edit="handleTabsEdit2"
               @tab-click="tabClick"
           >
+<!--            "te(item.title) ? t(item.title) : item.title" 是否国际化的判断-->
             <el-tab-pane
                 v-for="item in editableTabs"
                 :key="item.name"
-                :label="t(item.title)"
+                :label="labelValue(item.title, item.suffix)"
                 :name="item.name"
                 :lazy="true"
             >
@@ -496,12 +508,11 @@ function clickData(row: string) {
                 <!--                <component :is="currentComponent"></component>-->
               </template>
               <template v-else-if="item.page === '/db/dbRegister'">
-                <dbRegisterVue></dbRegisterVue>
+                <dbRegisterVue :handleTabsEdit="handleTabsEdit"></dbRegisterVue>
               </template>
               <template v-else-if="item.page === '/'">
                 <HomeView :handleTabsEdit="handleTabsEdit"></HomeView>
               </template>
-
               <template v-else-if="item.page === '/onlineTool/json'">
                 <JsonView></JsonView>
               </template>
@@ -511,6 +522,10 @@ function clickData(row: string) {
               <template v-else-if="item.page === '/onlineTool/zk'">
                 <zkView></zkView>
               </template>
+              <template v-else-if="item.page === '/db/dbDetails'">
+                <dbDetails :dbName="item.name"></dbDetails>
+              </template>
+
             </el-tab-pane>
           </el-tabs>
         </div>
@@ -526,6 +541,8 @@ function clickData(row: string) {
 }
 body {
   overflow: hidden;
+}
+body {
 }
 .no-wrap-textarea textarea {
   text-overflow: ellipsis;

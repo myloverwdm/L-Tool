@@ -2,43 +2,23 @@ package db
 
 import (
 	"LTool/goFunc"
+	"LTool/goFunc/db/funcDb"
+	"LTool/goFunc/db/info"
+	"LTool/goFunc/global"
 	"encoding/json"
 	"sort"
 	"time"
 )
 
-type DataBaseInfo struct {
-	// 数据库名称
-	Name string `json:"name"`
-	// 数据库的类型
-	DbType string `json:"dbType"`
-	// 地址
-	Address string `json:"address"`
-	// Port
-	Port string `json:"port"`
-	// 用户名
-	UserName string `json:"userName"`
-	// 密码
-	Password string `json:"password"`
-
-	// 注册时间
-	RegTime int64 `json:"regTime"`
-	// 更新时间
-	UpdateTime int64 `json:"updateTime"`
-
-	RegTimeStr    string `json:"RegTimeStr"`
-	UpdateTimeStr string `json:"updateTimeStr"`
-}
-
-func GetAllDataBaseInfo() []DataBaseInfo {
+func GetAllDataBaseInfo() []info.DataBaseInfo {
 	fileCache := goFunc.GetFileCache(dbFileCache)
-	var dataBaseInfoList []DataBaseInfo
+	var dataBaseInfoList []info.DataBaseInfo
 	if fileCache == "" {
-		return []DataBaseInfo{}
+		return []info.DataBaseInfo{}
 	} else {
 		err2 := json.Unmarshal([]byte(fileCache), &dataBaseInfoList)
 		if err2 != nil {
-			dataBaseInfoList = []DataBaseInfo{}
+			dataBaseInfoList = []info.DataBaseInfo{}
 		}
 	}
 	sort.Slice(dataBaseInfoList, func(i, j int) bool {
@@ -49,15 +29,15 @@ func GetAllDataBaseInfo() []DataBaseInfo {
 
 const dbFileCache = "cache/daCache"
 
-func AddOrUpdateDataBaseInfo(databaseInfo DataBaseInfo, isAdd bool) string {
+func AddOrUpdateDataBaseInfo(databaseInfo info.DataBaseInfo, isAdd bool) string {
 	fileCache := goFunc.GetFileCache(dbFileCache)
-	var dataBaseInfoList []DataBaseInfo
+	var dataBaseInfoList []info.DataBaseInfo
 	if fileCache == "" {
-		dataBaseInfoList = []DataBaseInfo{}
+		dataBaseInfoList = []info.DataBaseInfo{}
 	} else {
 		err2 := json.Unmarshal([]byte(fileCache), &dataBaseInfoList)
 		if err2 != nil {
-			dataBaseInfoList = []DataBaseInfo{}
+			dataBaseInfoList = []info.DataBaseInfo{}
 		}
 	}
 	name := databaseInfo.Name
@@ -98,13 +78,13 @@ func AddOrUpdateDataBaseInfo(databaseInfo DataBaseInfo, isAdd bool) string {
 
 func DeleteOneDataBaseInfo(dbName string) string {
 	fileCache := goFunc.GetFileCache(dbFileCache)
-	var dataBaseInfoList []DataBaseInfo
+	var dataBaseInfoList []info.DataBaseInfo
 	if fileCache == "" {
-		dataBaseInfoList = []DataBaseInfo{}
+		dataBaseInfoList = []info.DataBaseInfo{}
 	} else {
 		err2 := json.Unmarshal([]byte(fileCache), &dataBaseInfoList)
 		if err2 != nil {
-			dataBaseInfoList = []DataBaseInfo{}
+			dataBaseInfoList = []info.DataBaseInfo{}
 		}
 	}
 	index := -1
@@ -125,4 +105,23 @@ func DeleteOneDataBaseInfo(dbName string) string {
 	}
 	goFunc.UpdateFileCache(dbFileCache, string(marshal))
 	return ""
+}
+
+func GetDataBaseListByRegName(name string) global.LToolResponse {
+	fileCache := goFunc.GetFileCache(dbFileCache)
+	var dataBaseInfoList []info.DataBaseInfo
+	if fileCache == "" {
+		dataBaseInfoList = []info.DataBaseInfo{}
+	} else {
+		err2 := json.Unmarshal([]byte(fileCache), &dataBaseInfoList)
+		if err2 != nil {
+			dataBaseInfoList = []info.DataBaseInfo{}
+		}
+	}
+	for i := 0; i < len(dataBaseInfoList); i++ {
+		if dataBaseInfoList[i].Name == name {
+			return funcDb.GetDataBaseListByInfo(dataBaseInfoList[i])
+		}
+	}
+	return global.LToolResponse{}
 }

@@ -26,6 +26,9 @@ app.use(createPinia());
 app.use(router);
 app.use(i18n);
 app.use(CodeDiff);
+
+
+
 // @ts-ignore
 app.use(ElementPlus);
 app.mount("#app");

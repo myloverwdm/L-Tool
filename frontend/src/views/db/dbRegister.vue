@@ -22,11 +22,11 @@
         </template>
       </el-input>
     </el-col>
-    <el-col :span="1">
+    <el-col :span="2">
       <div class="grid-content ep-bg-purple"/>
       <el-button type="primary" @click="reg">{{ t("globals.reg") }}</el-button>
     </el-col>
-    <el-col :span="2">
+    <el-col :span="1">
       <div class="grid-content ep-bg-purple"/>
       <el-button type="primary" :icon="Refresh" @click="updateTableDataInDb"/>
     </el-col>
@@ -34,7 +34,7 @@
   </el-row>
 
   <el-divider content-position="center">T^T</el-divider>
-  <el-table :data="tableDataCopy" style="width: 100%" :empty-text="t('globals.empty-text')">
+  <el-table :data="tableDataCopy" style="width: 100%" :empty-text="t('globals.empty-text')" @row-dblclick="rowDbClick">
 
     <el-table-column fixed prop="name" :label="t('db.name')"/>
     <el-table-column prop="dbType" :label="t('db.dbType')"/>
@@ -90,7 +90,7 @@
         <el-input
             v-model="nowDataBaseInfo.password"
             type="password"
-            show-password
+            :show-password="canEditPassword"
             :readonly="!canEditPassword"
         >
           <template #append v-if="!canEditPassword">
@@ -99,7 +99,7 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary">{{ t("db.ping") }}</el-button>
+        <el-button type="primary" @click="ping">{{ t("db.ping") }}</el-button>
         <el-button type="success" @click="addOrUpdate">{{ t("globals.submit") }}</el-button>
       </el-form-item>
     </el-form>
@@ -111,15 +111,15 @@
 import {Edit, Refresh, Search} from "@element-plus/icons-vue";
 import {onMounted, ref} from "vue";
 import {useI18n} from "vue-i18n";
-import {AddOrUpdateDataBaseInfo, GetAllDataBaseInfo, DeleteOneDataBaseInfo} from "../../../wailsjs/go/main/App";
-import {db} from "../../../wailsjs/go/models";
+import {AddOrUpdateDataBaseInfo, DeleteOneDataBaseInfo, GetAllDataBaseInfo, PingDb} from "../../../wailsjs/go/main/App";
+import {info} from "../../../wailsjs/go/models";
 import {ElMessage, ElMessageBox} from "element-plus";
 
 const {t, availableLocales: languages, locale} = useI18n();
 const searchValue = ref("");
 const regOrUpdate = ref(false);
 const canEditPassword = ref(false);
-const nowDataBaseInfo = ref(new db.DataBaseInfo());
+const nowDataBaseInfo = ref(new info.DataBaseInfo());
 const editTitle = ref(t("globals.edit"));
 const isUpdate = ref(false);
 
@@ -127,8 +127,8 @@ onMounted(() => {
   updateTableDataInDb();
 });
 
-const tableData = ref(Array<db.DataBaseInfo>());
-const tableDataCopy = ref(Array<db.DataBaseInfo>());
+const tableData = ref(Array<info.DataBaseInfo>());
+const tableDataCopy = ref(Array<info.DataBaseInfo>());
 
 
 function updateTableDataInDb() {
@@ -169,7 +169,7 @@ function formatTwoDigits(number: string | number) {
 }
 
 
-function hiden(row: db.DataBaseInfo) {
+function hiden(row: info.DataBaseInfo) {
   if (searchValue.value === '') {
     return true;
   }
@@ -181,7 +181,7 @@ function hiden(row: db.DataBaseInfo) {
 }
 
 function reg() {
-  nowDataBaseInfo.value = new db.DataBaseInfo();
+  nowDataBaseInfo.value = new info.DataBaseInfo();
   nowDataBaseInfo.value.dbType = "MySQL";
   nowDataBaseInfo.value.port = "3306";
   canEditPassword.value = true;
@@ -190,7 +190,7 @@ function reg() {
   regOrUpdate.value = true;
 }
 
-const updateDb = (dataBaseInfo: db.DataBaseInfo) => {
+const updateDb = (dataBaseInfo: info.DataBaseInfo) => {
   nowDataBaseInfo.value = JSON.parse(JSON.stringify(dataBaseInfo));
   canEditPassword.value = false;
   editTitle.value = t("globals.edit");
@@ -221,7 +221,6 @@ function changePort() {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function addOrUpdate() {
-  console.log(JSON.stringify(nowDataBaseInfo.value))
   AddOrUpdateDataBaseInfo(nowDataBaseInfo.value, !isUpdate.value).then((s) => {
     if (s != "") {
       ElMessage({
@@ -239,7 +238,7 @@ function addOrUpdate() {
   });
 }
 
-const deleteClick = (dataBaseInfo: db.DataBaseInfo) => {
+const deleteClick = (dataBaseInfo: info.DataBaseInfo) => {
   ElMessageBox.confirm(
       t('globals.sure-delete'),
       t('globals.warning'),
@@ -270,5 +269,42 @@ const deleteClick = (dataBaseInfo: db.DataBaseInfo) => {
 
       })
 }
+
+function ping() {
+  PingDb(nowDataBaseInfo.value).then((s) => {
+    if (s) {
+      ElMessage({
+        message: t("db.ping-success"),
+        type: "success",
+      });
+    } else {
+      ElMessage({
+        message: t("db.ping-fail"),
+        type: "warning",
+      });
+    }
+
+  });
+  nowDataBaseInfo.value
+}
+
+function rowDbClick(row: info.DataBaseInfo, column: any, event: any) {
+  if (props !== undefined && props.handleTabsEdit !== undefined) {
+    props.handleTabsEdit(
+        "db.db",
+        "/db/dbDetails",
+        "db:" + row.name,
+        ":" + row.name
+    );
+  }
+
+}
+
+const props = defineProps({
+  // 这是父组件传递过来的函数
+  handleTabsEdit: {
+    type: Function
+  }
+});
 
 </script>

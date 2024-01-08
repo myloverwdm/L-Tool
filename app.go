@@ -4,9 +4,12 @@ import (
 	"LTool/configuration"
 	"LTool/goFunc"
 	"LTool/goFunc/db"
+	"LTool/goFunc/db/info"
+	"LTool/goFunc/global"
 	"LTool/goFunc/index"
 	"LTool/goFunc/index/code"
 	"LTool/goFunc/index/copy"
+	"LTool/goFunc/util"
 	"LTool/page/onlineTools"
 	"context"
 	"github.com/atotto/clipboard"
@@ -169,14 +172,26 @@ func (a *App) GetFileCache(filename string) string {
 	return goFunc.GetFileCache(filename)
 }
 
-func (a *App) GetAllDataBaseInfo() []db.DataBaseInfo {
+func (a *App) GetAllDataBaseInfo() []info.DataBaseInfo {
 	return db.GetAllDataBaseInfo()
 }
 
-func (a *App) AddOrUpdateDataBaseInfo(databaseInfo db.DataBaseInfo, isAdd bool) string {
+func (a *App) AddOrUpdateDataBaseInfo(databaseInfo info.DataBaseInfo, isAdd bool) string {
 	return db.AddOrUpdateDataBaseInfo(databaseInfo, isAdd)
 }
 
 func (a *App) DeleteOneDataBaseInfo(dbName string) string {
 	return db.DeleteOneDataBaseInfo(dbName)
+}
+
+func (a *App) PingDb(databaseInfo info.DataBaseInfo) bool {
+	return util.PingDb(databaseInfo)
+}
+
+func (a *App) PingDbWithName(name string) bool {
+	return util.PingDbWithName(name)
+}
+
+func (a *App) GetDataBaseListByRegName(name string) global.LToolResponse {
+	return db.GetDataBaseListByRegName(name)
 }

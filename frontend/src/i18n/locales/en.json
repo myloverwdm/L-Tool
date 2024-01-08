@@ -107,6 +107,7 @@
     "tip": "If the length of text in the history record of a certain clipboard exceeds the configuration, the excess part will be replaced with an ellipsis and a display button will be added to echo the complete content"
   },
   "db": {
+    "db": "db",
     "name": "Name",
     "address": "Address",
     "port": "port",
@@ -117,6 +118,8 @@
     "password": "Password",
     "ip": "IP",
     "ping": "Ping",
+    "ping-success": "Ping Success",
+    "ping-fail": "Ping Fail",
     "same-db": "Database service with the same name has already been registered",
     "db-404": "Database Service Not Found"
   }

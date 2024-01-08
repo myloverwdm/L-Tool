@@ -50,7 +50,13 @@ const router = createRouter({
       path: "/db/dbRegister",
       name: "dbRegister",
       component: () => import("../views/db/dbRegister.vue"),
-    }
+    },
+    {
+      path: "/db/dbDetails",
+      name: "dbDetails",
+      component: () => import("../views/db/dbDetails.vue"),
+    },
+
   ],
 });
 

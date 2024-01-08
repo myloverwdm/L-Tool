@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/IBM/sarama v1.42.1
 	github.com/atotto/clipboard v0.1.4
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/go-zookeeper/zk v1.0.3
 	github.com/pkg/browser v0.0.0-20210911075715-681adbf594b8
 	github.com/wailsapp/wails/v2 v2.6.0

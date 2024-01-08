@@ -42,6 +42,10 @@ export function GetCopyHis() {
   return window['go']['main']['App']['GetCopyHis']();
 }
 
+export function GetDataBaseListByRegName(arg1) {
+  return window['go']['main']['App']['GetDataBaseListByRegName'](arg1);
+}
+
 export function GetFileCache(arg1) {
   return window['go']['main']['App']['GetFileCache'](arg1);
 }
@@ -76,6 +80,14 @@ export function InitZk() {
 
 export function JsonToXml(arg1) {
   return window['go']['main']['App']['JsonToXml'](arg1);
+}
+
+export function PingDb(arg1) {
+  return window['go']['main']['App']['PingDb'](arg1);
+}
+
+export function PingDbWithName(arg1) {
+  return window['go']['main']['App']['PingDbWithName'](arg1);
 }
 
 export function ReadZkNode(arg1) {

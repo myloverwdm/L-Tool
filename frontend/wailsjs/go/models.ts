@@ -107,36 +107,22 @@ export namespace copy {
 
 }
 
-export namespace db {
+export namespace global {
 	
-	export class DataBaseInfo {
-	    name: string;
-	    dbType: string;
-	    address: string;
-	    port: string;
-	    userName: string;
-	    password: string;
-	    regTime: number;
-	    updateTime: number;
-	    RegTimeStr: string;
-	    updateTimeStr: string;
+	export class LToolResponse {
+	    success: boolean;
+	    message: string;
+	    data: string;
 	
 	    static createFrom(source: any = {}) {
-	        return new DataBaseInfo(source);
+	        return new LToolResponse(source);
 	    }
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.name = source["name"];
-	        this.dbType = source["dbType"];
-	        this.address = source["address"];
-	        this.port = source["port"];
-	        this.userName = source["userName"];
-	        this.password = source["password"];
-	        this.regTime = source["regTime"];
-	        this.updateTime = source["updateTime"];
-	        this.RegTimeStr = source["RegTimeStr"];
-	        this.updateTimeStr = source["updateTimeStr"];
+	        this.success = source["success"];
+	        this.message = source["message"];
+	        this.data = source["data"];
 	    }
 	}
 
@@ -383,6 +369,41 @@ export namespace index {
 		    }
 		    return a;
 		}
+	}
+
+}
+
+export namespace info {
+	
+	export class DataBaseInfo {
+	    name: string;
+	    dbType: string;
+	    address: string;
+	    port: string;
+	    userName: string;
+	    password: string;
+	    regTime: number;
+	    updateTime: number;
+	    RegTimeStr: string;
+	    updateTimeStr: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new DataBaseInfo(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.name = source["name"];
+	        this.dbType = source["dbType"];
+	        this.address = source["address"];
+	        this.port = source["port"];
+	        this.userName = source["userName"];
+	        this.password = source["password"];
+	        this.regTime = source["regTime"];
+	        this.updateTime = source["updateTime"];
+	        this.RegTimeStr = source["RegTimeStr"];
+	        this.updateTimeStr = source["updateTimeStr"];
+	    }
 	}
 
 }
