@@ -44,9 +44,6 @@
       </el-main>
     </el-container>
   </div>
-
-  <div style="display: none" id="dbName">{{ dbName }}</div>
-
 </template>
 
 
@@ -61,32 +58,28 @@ import {ElMessage} from "element-plus";
 
 const collapse = ref("200px");
 // 是否连接不上，若是连接不上则显示空状态
-const allIsEmpty = ref(false);
+const allIsEmpty = ref(true);
 // 当前数据库的内容是否隐藏
 const isHidenDdatabase = ref(false);
 // 当前数据库的内容隐藏后，显示的左侧条，是否显示icon
 const isHidenDdatabaseIcon = ref(false);
 
 // let dbName = ""l
-// const dbName = ref("");
+const dbName = ref("");
 
 onMounted(() => {
-  // 1. 判断是否能够连接数据库
-  let htmlElement = document.getElementById("dbName");
-  if (htmlElement == null) {
-    return
+  if (props == undefined || props.GetNowTabName == undefined) {
+   return;
   }
+  let getNowTabName = props.GetNowTabName();
+  dbName.value = getNowTabName.substring(3, getNowTabName.length);
+  console.log("getNowTabName ", getNowTabName, "dbName ", dbName.value)
   // 以 db: 开头， 所以是从第三个开始
-  var dbName = htmlElement.innerHTML.substring(3, htmlElement.innerHTML.length);
-  if (dbName == "") {
-    return;
-  }
-  console.log(htmlElement.innerHTML + "    " + dbName)
-  PingDbWithName(dbName).then((s) => {
+  PingDbWithName( dbName.value).then((s) => {
     allIsEmpty.value = !s;
     if (s) {
       // 得到所有数据库
-      GetDataBaseListByRegNameD(false, dbName);
+      GetDataBaseListByRegNameD(false,  dbName.value);
     } else {
       ElMessage({
         message: "数据库无法连接",
@@ -97,8 +90,18 @@ onMounted(() => {
   // updateTableDataInDb();
 });
 
+// eslint-disable-next-line vue/valid-define-props
+const props = defineProps({
+  // 这是父组件传递过来的函数
+  GetNowTabName: {
+    type: Function
+  }
+})
+
 function GetDataBaseListByRegNameD(alertM : boolean, dbName: string) {
-  console.log("=======================" + dbName)
+  if (props == undefined || props.GetNowTabName==null) {
+    return;
+  }
   GetDataBaseListByRegName(dbName).then((s) => {
     tableData.value = [];
     if (s.success) {
@@ -121,13 +124,7 @@ function GetDataBaseListByRegNameD(alertM : boolean, dbName: string) {
 }
 
 function GetDataBaseListByRegNameD2() {
-  let htmlElement = document.getElementById("dbName");
-  if (htmlElement == null) {
-    return
-  }
-  // 以 db: 开头， 所以是从第三个开始
-  var dbName = htmlElement.innerHTML.substring(3, htmlElement.innerHTML.length);
-  GetDataBaseListByRegNameD(true, dbName);
+  GetDataBaseListByRegNameD(true,  dbName.value);
 }
 
 async function changecollapse() {

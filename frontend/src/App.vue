@@ -88,8 +88,20 @@ const handleTabsEdit2 = (
   updateTabCache();
 };
 
+
+
 function tabClick(pane: TabsPaneContext, ev: Event) {
   UpdateFileCache("cache/tabSelectCache", pane.props.name + "");
+}
+function tabClick2(name: TabPaneName) {
+  setTimeout(() => {
+    // 得到上次缓存的json
+    UpdateFileCache("cache/tabSelectCache", editableTabsValue.value);
+  }, 100);
+}
+
+function GetNowTabName() {
+  return editableTabsValue.value;
 }
 
 // 缓存当前页面的数据内容
@@ -128,6 +140,7 @@ onMounted(() => {
   });
   // 得到上次选择的标签页
   GetFileCache("cache/tabSelectCache").then((s) => {
+    console.log("上次的结果: " + s);
     if (s !== "") {
       editableTabsValue.value = s;
     }
@@ -490,6 +503,7 @@ document.oncontextmenu = function (e) {
               closable
               @edit="handleTabsEdit2"
               @tab-click="tabClick"
+              @tab-remove="tabClick2"
           >
 <!--            "te(item.title) ? t(item.title) : item.title" 是否国际化的判断-->
             <el-tab-pane
@@ -523,7 +537,7 @@ document.oncontextmenu = function (e) {
                 <zkView></zkView>
               </template>
               <template v-else-if="item.page === '/db/dbDetails'">
-                <dbDetails :dbName="item.name"></dbDetails>
+                <dbDetails :dbName="item.name" :GetNowTabName="GetNowTabName"></dbDetails>
               </template>
 
             </el-tab-pane>
