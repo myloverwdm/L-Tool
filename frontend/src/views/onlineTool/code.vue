@@ -61,7 +61,7 @@ function copyData(code: string) {
 
   <el-tabs v-model="languageType" class="demo-tabs" @tab-click="handleClick">
     <div v-for="(value, key) in languageTypeList" :key="key">
-      <el-scrollbar height="90vh" :sync="true">
+      <el-scrollbar height="85vh" :sync="true">
         <el-tab-pane :label="value" :name="value" class="llllYYYYYY">
           <div v-for="group in codeGroup">
             <div v-if="hideOneGroup(group)">

@@ -98,7 +98,7 @@ function AAA(id: string) {
               </el-table>
             </el-header>
             <el-main>
-              <el-scrollbar max-height="100vh" ref="scrollbarRef" id="el-scrollbar">
+              <el-scrollbar max-height="85vh" ref="scrollbarRef" id="el-scrollbar">
                 <div v-for="(value, key) in commandData" :key="key" :id="value.name">
                   <h1 style="font-size: 20px" :ref="value.name">{{ value.name }}</h1>
 
