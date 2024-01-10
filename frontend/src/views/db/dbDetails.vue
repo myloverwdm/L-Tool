@@ -233,6 +233,9 @@ function GetDataBaseListByRegNameD2() {
 }
 
 async function changecollapse() {
+  // 右键菜单隐藏
+  elCardDatabaseRightHid.value = false;
+
   if (collapse.value === "200px") {
     let size = 200;
     while (size > 0) {
