@@ -139,7 +139,7 @@ function updateTableDataInDb() {
 }
 
 function updateTableData() {
-  tableDataCopy.value = []
+  tableDataCopy.value = [];
   for (let i = 0; i < tableData.value.length; i++) {
     if (hiden(tableData.value[i])) {
       let parse = JSON.parse(JSON.stringify(tableData.value[i]));

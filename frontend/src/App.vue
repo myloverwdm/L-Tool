@@ -537,7 +537,7 @@ document.oncontextmenu = function (e) {
                 <zkView></zkView>
               </template>
               <template v-else-if="item.page === '/db/dbDetails'">
-                <dbDetails :dbName="item.name" :GetNowTabName="GetNowTabName"></dbDetails>
+                <dbDetails  :GetNowTabName="GetNowTabName"></dbDetails>
               </template>
 
             </el-tab-pane>

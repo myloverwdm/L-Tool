@@ -15,8 +15,10 @@
           <el-container v-if="!allIsEmpty">
             <el-aside :width="collapse">
               <!--        这里是库名列表-->
-              <el-table :data="tableData" style="width: 100%" height="90vh"  :row-class-name="tableRowClassName" @row-contextmenu="rowContextmenu">
-                <el-table-column prop="dataBaseName" >
+              <el-table :data="tableData" style="width: 100%" height="90vh"  :row-class-name="tableRowClassName"
+                        @row-contextmenu="rowContextmenu"
+                        @mouseleave="elCardDatabaseRightHidPopup" @row-click="dataBaseRowClick" @cell-mouse-enter="dataBaseRowClickMouse">
+                <el-table-column prop="dataBaseName">
                   <template #header>
                     <div style="white-space: nowrap; display: flex; align-items: center;">
                       <span>数据库名</span>
@@ -36,25 +38,129 @@
               <el-header>
 
               </el-header>
-              <el-main>{{ dbName }}</el-main>
-              <el-footer>{{ dbName }}</el-footer>
+              <el-main>
+                <el-card class="box-card" >
+                  <el-container>
+                    <el-aside width="30px">
+                      <el-icon style="top: 2px"><FolderAdd /></el-icon>
+                    </el-aside>
+                    <el-aside  width="120px">
+                      <span class="el-card-database-right-span1">创建新数据库</span>
+                    </el-aside>
+                    <el-aside>
+                      <span class="el-card-database-right-span2">Ctrl+N</span>
+                    </el-aside>
+                  </el-container>
+                  <el-container>
+                    <el-aside width="30px">
+                      <el-icon style="top: 2px"><FolderAdd /></el-icon>
+                    </el-aside>
+                    <el-aside  width="120px">
+                      <span class="el-card-database-right-span1">创建新数据库</span>
+                    </el-aside>
+                    <el-aside>
+                      <span class="el-card-database-right-span2">Ctrl+N</span>
+                    </el-aside>
+                  </el-container><el-container>
+                  <el-aside width="30px">
+                    <el-icon style="top: 2px"><FolderAdd /></el-icon>
+                  </el-aside>
+                  <el-aside  width="120px">
+                    <span class="el-card-database-right-span1">创建新数据库</span>
+                  </el-aside>
+                  <el-aside>
+                    <span class="el-card-database-right-span2">Ctrl+N</span>
+                  </el-aside>
+                </el-container>
+
+                </el-card>
+              </el-main>
+
             </el-container>
           </el-container>
         </div>
+
+
+
       </el-main>
     </el-container>
   </div>
+  <el-card class="custom-card" id="el-card-database-right" shadow="hover" v-if="elCardDatabaseRightHid"
+           :style="{ top: elCardDatabaseRightPosition.y + 'px', left: elCardDatabaseRightPosition.x + 'px' }"
+           @mouseleave="elCardDatabaseRightHid=false;elCardDatabaseRightNowMouseInMenu=false"
+           @mouseover="elCardDatabaseRightHid=true;elCardDatabaseRightNowMouseInMenu=true">
+   <div class="el-card-database-right-header" @mouseleave="ssssss('s1')" @mousemove="sssss2('s1')" id="s1">
+     <div class="el-card-database-right">
+       <el-container>
+         <el-aside width="30px">
+           <el-icon style="top: 2px"><FolderAdd /></el-icon>
+         </el-aside>
+         <el-aside  width="120px">
+           <span class="el-card-database-right-span1">创建新数据库</span>
+         </el-aside>
+         <el-aside>
+           <span class="el-card-database-right-span2">Ctrl+N</span>
+         </el-aside>
+       </el-container>
+     </div>
+     <div class="databaseBr"></div>
+   </div>
+    <div class="el-card-database-right-header" @mouseleave="ssssss('s2')" @mousemove="sssss2('s2')" id="s2">
+    <div class="el-card-database-right">
+      <el-container>
+        <el-aside width="30px">
+          <el-icon style="top: 2px"><FullScreen /></el-icon>
+        </el-aside>
+        <el-aside  width="120px">
+          <span class="el-card-database-right-span1">查看DDL</span>
+        </el-aside>
+      </el-container>
+    </div>
+    <div class="databaseBr"></div>
+    </div>
+
+    <div class="el-card-database-right-header" @mouseleave="ssssss('s3')" @mousemove="sssss2('s3')" id="s3">
+    <div class="el-card-database-right">
+      <el-container>
+        <el-aside width="30px">
+          <el-icon style="top: 2px"><Edit /></el-icon>
+        </el-aside>
+        <el-aside  width="120px">
+          <span class="el-card-database-right-span1">重命名</span>
+        </el-aside>
+        <el-aside>
+          <span class="el-card-database-right-span2">M</span>
+        </el-aside>
+      </el-container>
+    </div>
+    <div class="databaseBr"></div>
+    </div>
+    <div class="el-card-database-right-header" @mouseleave="ssssss('s4')" @mousemove="sssss2('s4')" id="s4">
+    <div class="el-card-database-right">
+      <el-container>
+        <el-aside width="30px">
+          <el-icon style="top: 2px"><Delete /></el-icon>
+        </el-aside>
+        <el-aside width="120px">
+          <span class="el-card-database-right-span1">删除</span>
+        </el-aside>
+        <el-aside>
+          <span class="el-card-database-right-span2">Delete</span>
+        </el-aside>
+      </el-container>
+    </div>
+    </div>
+
+  </el-card>
 </template>
 
 
 <script lang="ts" setup>
 import {onMounted, ref} from "vue";
-import {ArrowLeft, ArrowRightBold, Refresh} from "@element-plus/icons-vue";
+import {ArrowLeft, ArrowRightBold, Refresh, FolderAdd, FullScreen, Edit, Delete} from "@element-plus/icons-vue";
 import {PingDbWithName, GetDataBaseListByRegName} from "../../../wailsjs/go/main/App";
-import {languages} from "monaco-editor";
-import json = languages.json;
-import {ElMessage} from "element-plus";
 
+import {ElMessage} from "element-plus";
 
 const collapse = ref("200px");
 // 是否连接不上，若是连接不上则显示空状态
@@ -73,7 +179,6 @@ onMounted(() => {
   }
   let getNowTabName = props.GetNowTabName();
   dbName.value = getNowTabName.substring(3, getNowTabName.length);
-  console.log("getNowTabName ", getNowTabName, "dbName ", dbName.value)
   // 以 db: 开头， 所以是从第三个开始
   PingDbWithName( dbName.value).then((s) => {
     allIsEmpty.value = !s;
@@ -150,15 +255,14 @@ const tableRowClassName = ({
                              row,
                              rowIndex,
                            }: {
-  row: string
+  row: JSON
   rowIndex: number
 }) => {
-  if (rowIndex % 2 == 0) {
+  if ((row as any)["dataBaseName"] == nowSelectDataBaseName.value) {
     return "lyb-row";
   } else {
     return "";
   }
-
 }
 
 function sleep(ms: number | undefined) {
@@ -167,21 +271,104 @@ function sleep(ms: number | undefined) {
 
 const rowContextmenu = (row: JSON, column: any, event: any
 ) => {
-  console.log("右键 + " + JSON.stringify(row))
+  nowSelectDataBaseName.value = (row as any)["dataBaseName"];
+  console.log((row as any)["dataBaseName"]);
+  elCardDatabaseRightHid.value = false;
+  elCardDatabaseRightNowMouseInMenu.value = true;
+  elCardDatabaseRightPosition.value.x = event.clientX;
+  elCardDatabaseRightPosition.value.y = event.clientY;
+  elCardDatabaseRightHid.value = true;
 }
 
 const tableData = ref([{ dataBaseName: "test" }]);
+
+// 当前选择的数据库
+const nowSelectDataBaseName = ref('');
+const showPopover = ref(false);
+// 数据库右键菜单的位置
+let elCardDatabaseRightPosition = ref({ x: 300, y: 300 });
+// 数据库右键菜单的显示与隐藏
+let elCardDatabaseRightHid = ref(false);
+// 当前鼠标是否在右键菜单上
+let elCardDatabaseRightNowMouseInMenu = ref(false);
+function elCardDatabaseRightHidPopup() {
+  // 这个操作必不可少
+  elCardDatabaseRightNowMouseInMenu.value = false;
+  setTimeout(() => {
+    if (elCardDatabaseRightNowMouseInMenu.value) {
+      return;
+    }
+    elCardDatabaseRightHid.value = false;
+  }, 100);
+}
+// 单击一个数据库
+function dataBaseRowClick(row: JSON, column: any, event: any) {
+  nowSelectDataBaseName.value = (row as any)["dataBaseName"];
+
+}
+// 鼠标进入一个数据库行
+function dataBaseRowClickMouse(row: JSON, column: any,cell:any, event: any) {
+
+}
+
+function sssss2(idStr: string) {
+  const element = document.getElementById(idStr);
+  if (element == undefined) {
+    return;
+  }
+  element.style.backgroundColor = "#C7DEF7";
+}
+
+function ssssss(idStr: string) {
+  const element = document.getElementById(idStr);
+  if (element == undefined) {
+    return;
+  }
+  element.style.backgroundColor = '';
+}
+
 </script>
 
-<script lang="ts">
-export default {
-  props: ["dbName"], // 接收父组件传来的参数
-}
-</script>
+
 
 <style>
 .lyb-row {
-  background-color: rgba(156, 189, 227, 0.1) !important;
+  background-color: rgba(78, 145, 224, 0.21) !important;
+  /*pointer-events: none !important;*/
+}
+
+.el-card-database-right {
+  padding: 10px;
+  /*text-align: right;*/
+}
+
+.el-card {
+  --el-card-padding: 0px !important;
+}
+.el-card-database-icon {
+  top: 2px !important;
+}
+
+.el-card-database-right-span1 {
+  font-size: 12px;
+}
+.el-card-database-right-span2 {
+  font-size: 11px;
+  color: #909399;
+}
+
+#el-card-database-right {
+  width: 250px;
+  position: fixed;
+  z-index: 999;
+  transition: none
+}
+#el-card-database-right :hover {
+  cursor: pointer;
+}
+
+.databaseBr {
+  height: 1px; background-color: #b6b6b6
 }
 
 </style>
