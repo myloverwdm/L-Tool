@@ -2,6 +2,7 @@ package db
 
 import (
 	"LTool/goFunc"
+	"LTool/goFunc/db/dbcache"
 	"LTool/goFunc/db/funcDb"
 	"LTool/goFunc/db/info"
 	"LTool/goFunc/global"
@@ -104,6 +105,12 @@ func DeleteOneDataBaseInfo(dbName string) string {
 		return "globals.unknown-error"
 	}
 	goFunc.UpdateFileCache(dbFileCache, string(marshal))
+	// 是否已经建立了连接,若是,则断开
+	db := dbcache.DbMap[dbName]
+	if db == nil {
+		db.Close()
+		delete(dbcache.DbMap, dbName)
+	}
 	return ""
 }
 
@@ -124,4 +131,27 @@ func GetDataBaseListByRegName(name string) global.LToolResponse {
 		}
 	}
 	return global.LToolResponse{}
+}
+
+func GetDataBaseType(name string) string {
+	fileCache := goFunc.GetFileCache(dbFileCache)
+	var dataBaseInfoList []info.DataBaseInfo
+	if fileCache == "" {
+		dataBaseInfoList = []info.DataBaseInfo{}
+	} else {
+		err2 := json.Unmarshal([]byte(fileCache), &dataBaseInfoList)
+		if err2 != nil {
+			dataBaseInfoList = []info.DataBaseInfo{}
+		}
+	}
+	for i := 0; i < len(dataBaseInfoList); i++ {
+		if dataBaseInfoList[i].Name == name {
+			return dataBaseInfoList[i].DbType
+		}
+	}
+	return ""
+}
+
+func GetAllCharset(name, dbType string) map[string][]string {
+	return funcDb.GetAllCharset(name, dbType)
 }

@@ -4,6 +4,7 @@ import (
 	"LTool/configuration"
 	"LTool/goFunc"
 	"LTool/goFunc/db"
+	"LTool/goFunc/db/funcDb"
 	"LTool/goFunc/db/info"
 	"LTool/goFunc/global"
 	"LTool/goFunc/index"
@@ -12,6 +13,7 @@ import (
 	"LTool/goFunc/util"
 	"LTool/page/onlineTools"
 	"context"
+	"fmt"
 	"github.com/atotto/clipboard"
 	"github.com/pkg/browser"
 	"time"
@@ -194,4 +196,27 @@ func (a *App) PingDbWithName(name string) bool {
 
 func (a *App) GetDataBaseListByRegName(name string) global.LToolResponse {
 	return db.GetDataBaseListByRegName(name)
+}
+
+func (a *App) GetDataBaseType(name string) string {
+	return db.GetDataBaseType(name)
+}
+
+func (a *App) T1(name string) info.DataBaseCreateForm {
+	fmt.Println("仅是为了把DataBaseCreateForm给到前端")
+	return info.DataBaseCreateForm{}
+}
+
+// GetAllCharset 获取所有的字符集和排序规则
+func (a *App) GetAllCharset(name, dbType string) map[string][]string {
+	fmt.Println("仅是为了把DataBaseCreateForm给到前端")
+	return db.GetAllCharset(name, dbType)
+}
+
+func (a *App) CreateDatabase(name, dbType string, dataBaseCreateForm info.DataBaseCreateForm) global.LToolResponse {
+	return funcDb.CreateDatabase(dbType, name, dataBaseCreateForm)
+}
+
+func (a *App) GetDataBaseDDL(dbType, regInfoName, dbName string) string {
+	return funcDb.GetDataBaseDDL(dbType, regInfoName, dbName)
 }

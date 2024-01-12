@@ -375,6 +375,26 @@ export namespace index {
 
 export namespace info {
 	
+	export class DataBaseCreateForm {
+	    dataBaseName: string;
+	    characterSet: string;
+	    collation: string;
+	    userName: string;
+	    password: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new DataBaseCreateForm(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.dataBaseName = source["dataBaseName"];
+	        this.characterSet = source["characterSet"];
+	        this.collation = source["collation"];
+	        this.userName = source["userName"];
+	        this.password = source["password"];
+	    }
+	}
 	export class DataBaseInfo {
 	    name: string;
 	    dbType: string;

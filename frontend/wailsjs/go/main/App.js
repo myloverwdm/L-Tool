@@ -14,12 +14,20 @@ export function BrowserOpenURL(arg1) {
   return window['go']['main']['App']['BrowserOpenURL'](arg1);
 }
 
+export function CreateDatabase(arg1, arg2, arg3) {
+  return window['go']['main']['App']['CreateDatabase'](arg1, arg2, arg3);
+}
+
 export function DeleteOneDataBaseInfo(arg1) {
   return window['go']['main']['App']['DeleteOneDataBaseInfo'](arg1);
 }
 
 export function DeleteZk(arg1) {
   return window['go']['main']['App']['DeleteZk'](arg1);
+}
+
+export function GetAllCharset(arg1, arg2) {
+  return window['go']['main']['App']['GetAllCharset'](arg1, arg2);
 }
 
 export function GetAllDataBaseInfo() {
@@ -42,8 +50,16 @@ export function GetCopyHis() {
   return window['go']['main']['App']['GetCopyHis']();
 }
 
+export function GetDataBaseDDL(arg1, arg2, arg3) {
+  return window['go']['main']['App']['GetDataBaseDDL'](arg1, arg2, arg3);
+}
+
 export function GetDataBaseListByRegName(arg1) {
   return window['go']['main']['App']['GetDataBaseListByRegName'](arg1);
+}
+
+export function GetDataBaseType(arg1) {
+  return window['go']['main']['App']['GetDataBaseType'](arg1);
 }
 
 export function GetFileCache(arg1) {
@@ -96,6 +112,10 @@ export function ReadZkNode(arg1) {
 
 export function SetForm(arg1) {
   return window['go']['main']['App']['SetForm'](arg1);
+}
+
+export function T1(arg1) {
+  return window['go']['main']['App']['T1'](arg1);
 }
 
 export function UpdateFileCache(arg1, arg2) {

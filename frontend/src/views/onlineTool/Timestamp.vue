@@ -12,6 +12,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  console.log("退出")
   clearInterval(timer);
 });
 

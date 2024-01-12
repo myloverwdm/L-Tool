@@ -22,3 +22,16 @@ type DataBaseInfo struct {
 	RegTimeStr    string `json:"RegTimeStr"`
 	UpdateTimeStr string `json:"updateTimeStr"`
 }
+
+type DataBaseCreateForm struct {
+	// 数据库名称
+	DataBaseName string `json:"dataBaseName"`
+	// 字符集
+	CharacterSet string `json:"characterSet"`
+	// 排序规则
+	Collation string `json:"collation"`
+	// 模式/用户名
+	UserName string `json:"userName"`
+	// 密码
+	Password string `json:"password"`
+}
